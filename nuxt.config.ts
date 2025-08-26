@@ -11,6 +11,14 @@ export default defineNuxtConfig({
     "nuxt-schema-org",
   ],
 
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: "id",
+      },
+    },
+  },
+
   css: ["~/assets/css/main.css"],
 
   aos: {
