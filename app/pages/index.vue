@@ -66,6 +66,18 @@
           <Icon name="ri:tiktok-fill" class="text-lg" />
           <span class="font-medium">TikTok</span>
         </a>
+
+        <!-- Facebook -->
+        <a
+          href="https://www.facebook.com/dailyjeds.page"
+          target="_blank"
+          class="bg-[#4267B2]/90 rounded-xl py-3 px-4 flex items-center justify-center gap-2 hover:bg-[#4267B2] transition"
+          data-aos="fade-up"
+          data-aos-delay="600"
+        >
+          <Icon name="mdi:facebook" class="text-lg" />
+          <span class="font-medium">Facebook</span>
+        </a>
       </section>
 
       <!-- Optional Footer -->
