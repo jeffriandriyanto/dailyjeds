@@ -1,0 +1,2 @@
+http://*    https://dailyjeds.netlify.app/:splat   301!
+https://www.dailyjeds.netlify.app/*   https://dailyjeds.netlify.app/:splat  301!

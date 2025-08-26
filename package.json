@@ -17,6 +17,7 @@
     "eslint": "^9.34.0",
     "nuxt": "^4.0.3",
     "nuxt-aos": "1.2.5",
+    "nuxt-schema-org": "5.0.6",
     "typescript": "^5.9.2",
     "vue": "^3.5.20",
     "vue-router": "^4.5.1"

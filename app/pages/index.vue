@@ -1,3 +1,34 @@
+<script setup>
+useHead({
+  title: "Jeds Journey (@daily.jeds) | Daily Activity, Home & Living, Review",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Daily Activity, Home & Living, Review, Tips & Tricks, Healthy Lifestyle, Mom’s Life. 📍 Salatiga, Indonesia | Follow @daily.jeds di TikTok & Instagram.",
+    },
+    {
+      name: "keywords",
+      content:
+        "daily jeds, jeds journey, daily activity, home living, review, tips tricks, healthy lifestyle, mom life, salatiga",
+    },
+    { property: "og:type", content: "website" },
+    {
+      property: "og:title",
+      content:
+        "Jeds Journey (@daily.jeds) | Daily Activity, Home & Living, Review",
+    },
+    {
+      property: "og:description",
+      content:
+        "Ikuti @daily.jeds (Jeds Journey) untuk Daily Activity, Home & Living, Tips, Healthy Lifestyle & Mom’s Life. 📍 Salatiga, Indonesia",
+    },
+    { property: "og:image", content: "/profile.jpg" },
+    { name: "twitter:card", content: "summary_large_image" },
+  ],
+});
+</script>
+
 <template>
   <div class="min-h-screen flex justify-center bg-black text-white/90">
     <div class="w-full lg:max-w-md text-center">
@@ -10,6 +41,11 @@
           src="/profile.jpg"
           alt="Profile picture of daily.jeds"
           class="w-full z-0 shadow-md"
+          width="400"
+          height="500"
+          format="webp"
+          quality="70"
+          loading="lazy"
         />
       </section>
 
@@ -47,7 +83,7 @@
         <a
           href="https://shpe.site/daily.jeds"
           target="_blank"
-          class="bg-[#a8b5a2]/90 rounded-xl py-3 px-4 flex items-center justify-center gap-2 hover:bg-[#a8b5a2] transition"
+          class="bg-[#a8b5a2]/90 text-black rounded-xl py-3 px-4 flex items-center justify-center gap-2 hover:bg-[#a8b5a2] transition"
           data-aos="fade-up"
           data-aos-delay="400"
         >
