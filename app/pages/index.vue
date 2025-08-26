@@ -37,7 +37,7 @@
           target="_blank"
           class="bg-[#f5f0e6]/90 text-black rounded-xl py-3 px-4 flex items-center justify-center gap-2 hover:bg-[#f5f0e6] transition"
           data-aos="fade-up"
-          data-aos-delay="500"
+          data-aos-delay="300"
         >
           <Icon name="mdi:instagram" class="text-lg" />
           <span class="font-medium">Instagram</span>
@@ -61,7 +61,7 @@
           target="_blank"
           class="bg-[#8d6e63]/90 rounded-xl py-3 px-4 flex items-center justify-center gap-2 hover:bg-[#8d6e63] transition"
           data-aos="fade-up"
-          data-aos-delay="300"
+          data-aos-delay="500"
         >
           <Icon name="ri:tiktok-fill" class="text-lg" />
           <span class="font-medium">TikTok</span>
