@@ -1,6 +1,303 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+@theme {
+  --font-lazy: "LazyDog", sans-serif;
+  --font-ghibli: "Georgia", "Times New Roman", serif;
+  --font-body: "Segoe UI", "Roboto", sans-serif;
+
+  --color-ghibli-cream: #FDF6E3;
+  --color-ghibli-cream-light: #FFFEF9;
+  --color-ghibli-cream-warm: #F5E6D3;
+
+  --color-ghibli-green-50: #F0F5ED;
+  --color-ghibli-green-100: #D4E4CB;
+  --color-ghibli-green-200: #B8D3A9;
+  --color-ghibli-green-300: #9CC287;
+  --color-ghibli-green-400: #80B165;
+  --color-ghibli-green-500: #6B9F50;
+  --color-ghibli-green-600: #5A8B43;
+  --color-ghibli-green-700: #4A7437;
+  --color-ghibli-green-800: #3A5D2B;
+  --color-ghibli-green-900: #2A461F;
+
+  --color-ghibli-amber-50: #FFF8E1;
+  --color-ghibli-amber-100: #FFECB3;
+  --color-ghibli-amber-200: #FFE082;
+  --color-ghibli-amber-300: #FFD54F;
+  --color-ghibli-amber-400: #FFCA28;
+  --color-ghibli-amber-500: #FFC107;
+  --color-ghibli-amber-600: #FFB300;
+  --color-ghibli-amber-700: #FFA000;
+  --color-ghibli-amber-800: #FF8F00;
+  --color-ghibli-amber-900: #FF6F00;
+
+  --color-ghibli-wood-50: #F5F0EB;
+  --color-ghibli-wood-100: #E8D5C4;
+  --color-ghibli-wood-200: #D4B89A;
+  --color-ghibli-wood-300: #C09B70;
+  --color-ghibli-wood-400: #B07D4F;
+  --color-ghibli-wood-500: #8B6914;
+  --color-ghibli-wood-600: #7A5C12;
+  --color-ghibli-wood-700: #694F10;
+  --color-ghibli-wood-800: #58420E;
+  --color-ghibli-wood-900: #47350C;
+
+  --color-ghibli-brown-50: #F8F4F0;
+  --color-ghibli-brown-100: #EDE4D8;
+  --color-ghibli-brown-200: #D4C4A8;
+  --color-ghibli-brown-300: #B8A07A;
+  --color-ghibli-brown-400: #9C7C4C;
+  --color-ghibli-brown-500: #6D5538;
+  --color-ghibli-brown-600: #5C4730;
+  --color-ghibli-brown-700: #4B3928;
+  --color-ghibli-brown-800: #3A2B20;
+  --color-ghibli-brown-900: #291D18;
+
+  --shadow-ghibli: 0 4px 20px rgba(139, 105, 20, 0.1);
+  --shadow-ghibli-hover: 0 8px 30px rgba(139, 105, 20, 0.15);
+  --shadow-ghibli-glow: 0 0 40px rgba(255, 193, 7, 0.2);
+
+  --animate-vinyl-spin: vinyl-spin 3s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-glow-pulse: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes vinyl-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 193, 7, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(255, 193, 7, 0.6); }
+}
+
+:root {
+  --ghibli-cream: #FDF6E3;
+  --ghibli-cream-light: #FFFEF9;
+  --ghibli-cream-warm: #F5E6D3;
+  --ghibli-green-100: #D4E4CB;
+  --ghibli-green-200: #B8D3A9;
+  --ghibli-green-300: #9CC287;
+  --ghibli-green-400: #80B165;
+  --ghibli-green-500: #6B9F50;
+  --ghibli-amber-100: #FFECB3;
+  --ghibli-amber-200: #FFE082;
+  --ghibli-amber-300: #FFD54F;
+  --ghibli-amber-400: #FFCA28;
+  --ghibli-amber-500: #FFC107;
+  --ghibli-wood-100: #E8D5C4;
+  --ghibli-wood-200: #D4B89A;
+  --ghibli-wood-300: #C09B70;
+  --ghibli-wood-400: #B07D4F;
+  --ghibli-brown-500: #6D5538;
+  --ghibli-brown-600: #5C4730;
+  --ghibli-brown-700: #4B3928;
+}
+
 body {
   padding: 0px !important;
+  background-color: var(--ghibli-cream);
+  color: var(--ghibli-brown-700);
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ghibli-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.ghibli-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, rgba(255, 202, 40, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ghibli-card {
+  background: linear-gradient(145deg, #FFFEF9 0%, #F5F0EB 100%);
+  border: 1px solid rgba(139, 105, 20, 0.1);
+  border-radius: 16px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ghibli-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(139, 105, 20, 0.15);
+  border-color: rgba(255, 193, 7, 0.3);
+}
+
+.ghibli-button {
+  background: linear-gradient(135deg, #80B165 0%, #6B9F50 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 32px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.ghibli-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.ghibli-button:hover::before {
+  left: 100%;
+}
+
+.ghibli-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(107, 159, 80, 0.4);
+}
+
+.ghibli-button-secondary {
+  background: linear-gradient(135deg, #F5E6D3 0%, #E8D5C4 100%);
+  color: var(--ghibli-brown-700);
+  border: 2px solid rgba(139, 105, 20, 0.2);
+  border-radius: 12px;
+  padding: 12px 32px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ghibli-button-secondary:hover {
+  background: linear-gradient(135deg, #E8D5C4 0%, #D4B89A 100%);
+  border-color: rgba(255, 193, 7, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(139, 105, 20, 0.2);
+}
+
+.ghibli-glow {
+  box-shadow: 0 0 30px rgba(255, 193, 7, 0.15);
+}
+
+.ghibli-glow:hover {
+  box-shadow: 0 0 50px rgba(255, 193, 7, 0.3);
+}
+
+.ghibli-text-gradient {
+  background: linear-gradient(135deg, #6D5538 0%, #8B6914 50%, #B07D4F 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ghibli-divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(139, 105, 20, 0.2), transparent);
+  margin: 3rem 0;
+}
+
+.vinyl-record {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #1a1a1a, #333, #1a1a1a, #333, #1a1a1a);
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.vinyl-record::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #FFC107;
+  box-shadow: 0 0 8px rgba(255, 193, 7, 0.5);
+}
+
+.vinyl-record::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.vinyl-spinning {
+  animation: vinyl-spin 3s linear infinite;
+}
+
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--ghibli-green-300), var(--ghibli-amber-300), transparent);
+  transform: translateX(-50%);
+}
+
+.timeline-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--ghibli-green-400), var(--ghibli-amber-400));
+  border: 3px solid white;
+  box-shadow: 0 2px 8px rgba(107, 159, 80, 0.3);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.social-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: white;
+}
+
+.social-icon:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.glass-effect {
+  background: rgba(255, 254, 249, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(139, 105, 20, 0.1);
+}
+
+.ghibli-pattern {
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(107, 159, 80, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 193, 7, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(176, 125, 79, 0.05) 0%, transparent 50%);
 }

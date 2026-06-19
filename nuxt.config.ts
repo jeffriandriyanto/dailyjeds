@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     "nuxt-schema-org",
   ],
 
-  css: ["~/assets/css/main.css"],
+  css: ["~/assets/css/main.css", "@/assets/css/fonts.css"],
 
   aos: {
     duration: 800,
@@ -19,6 +19,25 @@ export default defineNuxtConfig({
     once: true,
     delay: 100,
     offset: 0,
+  },
+
+  app: {
+    head: {
+      script: [
+        {
+          src: "https://www.googletagmanager.com/gtag/js?id=G-64NDFVZN62",
+          async: true,
+        },
+        {
+          children: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-64NDFVZN62');
+          `,
+        },
+      ],
+    },
   },
 
   sitemap: {
