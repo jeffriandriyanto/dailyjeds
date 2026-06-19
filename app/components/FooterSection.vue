@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { trackWaClick, trackSocialClick, trackScroll } = useAnalytics()
+
 interface SocialLink {
   name: string
   url: string
@@ -106,7 +108,7 @@ const scrollToSection = (link: string) => {
                 <a
                   :href="link.to"
                   class="text-ghibli-brown-500 hover:text-ghibli-amber-600 transition-colors flex items-center gap-2 group"
-                  @click.prevent="scrollToSection(link.to)"
+                  @click.prevent="trackScroll(link.label); scrollToSection(link.to)"
                 >
                   <Icon 
                     name="mdi:chevron-right" 
@@ -132,6 +134,7 @@ const scrollToSection = (link: string) => {
                 class="social-icon"
                 :class="[social.color, social.hoverColor]"
                 :aria-label="`Follow us on ${social.name}`"
+                @click="trackSocialClick(social.name.toLowerCase())"
               >
                 <Icon :name="social.icon" class="w-5 h-5" />
               </a>
@@ -142,6 +145,7 @@ const scrollToSection = (link: string) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 class="ghibli-button-secondary inline-flex items-center gap-2 text-sm"
+                @click="trackWaClick('footer_chat_whatsapp')"
               >
                 <Icon name="mdi:whatsapp" class="w-4 h-4" />
                 <span>Chat WhatsApp</span>

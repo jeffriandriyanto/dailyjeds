@@ -2,6 +2,8 @@
 const WHATSAPP_NUMBER = '6285179857522'
 const WA_MESSAGE = 'Halo Kak! Saya tertarik untuk berkolaborasi dengan @daily.jeds. Boleh info lebih lanjut?'
 
+const { trackWaClick, trackScroll } = useAnalytics()
+
 interface Props {
   title?: string
   subtitle?: string
@@ -59,13 +61,14 @@ const scrollToSection = (link: string) => {
               target="_blank"
               rel="noopener noreferrer"
               class="ghibli-button text-lg px-8 py-4 flex items-center justify-center gap-2 group"
+              @click="trackWaClick('hero_mulai_kolaborasi')"
             >
               <Icon name="mdi:whatsapp" class="w-5 h-5" />
               <span>Mulai Kolaborasi</span>
             </a>
             <button
               class="ghibli-button-secondary text-lg px-8 py-4 flex items-center justify-center gap-2 group"
-              @click="scrollToSection('#journey')"
+              @click="trackScroll('journey'); scrollToSection('#journey')"
             >
               <span>Cerita Kami</span>
               <Icon 
@@ -124,7 +127,7 @@ const scrollToSection = (link: string) => {
     <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
       <button 
         class="text-ghibli-brown-400 hover:text-ghibli-amber-500 transition-colors"
-        @click="scrollToSection('#story')"
+        @click="trackScroll('story'); scrollToSection('#story')"
         aria-label="Scroll to content"
       >
         <Icon name="mdi:chevron-double-down" class="w-8 h-8" />

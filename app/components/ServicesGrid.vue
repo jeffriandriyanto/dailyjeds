@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const WHATSAPP_NUMBER = '6285179857522'
 
+const { trackWaClick } = useAnalytics()
+
 interface Service {
   id: string
   title: string
@@ -144,6 +146,7 @@ const getWaLink = (message: string) => {
               target="_blank"
               rel="noopener noreferrer"
               class="ghibli-button w-full flex items-center justify-center gap-2 group/btn"
+              @click="trackWaClick(`service_${service.id}`)"
             >
               <Icon name="mdi:whatsapp" class="w-5 h-5" />
               <span>{{ service.ctaText }}</span>
