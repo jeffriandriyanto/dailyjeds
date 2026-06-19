@@ -11,11 +11,11 @@ const milestones: Milestone[] = [
   {
     year: '2018',
     title: 'Where It All Began',
-    description: 'Two hearts, one tiny apartment, and a dream of building something beautiful together. The journey of @daily.jeds started with simple moments shared online.',
+    description: 'Two hearts and a dream of building something beautiful together. The journey of @daily.jeds started with simple moments.',
     icon: '💕',
   },
   {
-    year: '2020',
+    year: '2019',
     title: 'Our Little Miracle',
     description: 'Welcoming our first child changed everything. Sleepless nights became the new normal, but so did a love we never knew was possible.',
     icon: '👶',
