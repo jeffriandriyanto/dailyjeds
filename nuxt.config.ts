@@ -44,6 +44,8 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    instagramAccountId: process.env.NUXT_INSTAGRAM_ACCOUNT_ID || '',
+    instagramToken: process.env.NUXT_META_ACCESS_TOKEN || '',
     public: {
       siteUrl: "https://dailyjeds.netlify.app",
     },

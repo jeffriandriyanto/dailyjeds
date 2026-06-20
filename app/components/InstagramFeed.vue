@@ -1,20 +1,62 @@
 <script setup lang="ts">
 const { trackClick } = useAnalytics()
 
-const curatorLoaded = ref(false)
+interface InstagramPost {
+  id: string
+  caption?: string
+  media_type: 'IMAGE' | 'VIDEO' | 'CAROUSEL_ALBUM'
+  media_url: string
+  thumbnail_url?: string
+  permalink: string
+  timestamp: string
+}
 
-onMounted(() => {
-  if (!process.client) return
+const posts = ref<InstagramPost[]>([])
+const loading = ref(true)
+const error = ref(false)
 
-  const script = document.createElement('script')
-  script.async = true
-  script.charset = 'UTF-8'
-  script.src = 'https://cdn.curator.io/published/c6fecf1c-6771-4716-922a-b523672ceaa8.js'
-  script.onload = () => {
-    curatorLoaded.value = true
-  }
-  document.body.appendChild(script)
+const { data, status } = await useFetch('/api/instagram/feed', {
+  key: 'instagram-feed',
+  getCachedData: (key, nuxt) => {
+    return nuxt.payload.data[key] || nuxt.static.data[key]
+  },
 })
+
+watchEffect(() => {
+  if (data.value) {
+    posts.value = (data.value as any).posts || []
+    loading.value = false
+    if ((data.value as any).error) {
+      error.value = true
+    }
+  }
+  if (status.value === 'error') {
+    loading.value = false
+    error.value = true
+  }
+})
+
+const formatDate = (timestamp: string) => {
+  const date = new Date(timestamp)
+  return date.toLocaleDateString('id-ID', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  })
+}
+
+const truncateCaption = (caption?: string, maxLength = 80) => {
+  if (!caption) return ''
+  if (caption.length <= maxLength) return caption
+  return caption.substring(0, maxLength).trim() + '...'
+}
+
+const getMediaUrl = (post: InstagramPost) => {
+  if (post.media_type === 'VIDEO') {
+    return post.thumbnail_url || post.media_url
+  }
+  return post.media_url
+}
 </script>
 
 <template>
@@ -47,27 +89,78 @@ onMounted(() => {
         </a>
       </div>
 
-      <div class="ghibli-card p-4 sm:p-8 shadow-ghibli" data-aos="fade-up" data-aos-delay="200">
-        <div v-if="!curatorLoaded" class="flex items-center justify-center py-20">
-          <div class="flex flex-col items-center gap-4">
-            <div class="w-10 h-10 border-3 border-ghibli-green-300 border-t-ghibli-green-600 rounded-full animate-spin" />
-            <p class="text-ghibli-brown-400 text-sm">Memuat postingan...</p>
-          </div>
+      <div v-if="loading" class="flex items-center justify-center py-20" data-aos="fade-up">
+        <div class="flex flex-col items-center gap-4">
+          <div class="w-10 h-10 border-3 border-ghibli-green-300 border-t-ghibli-green-600 rounded-full animate-spin" />
+          <p class="text-ghibli-brown-400 text-sm">Memuat postingan...</p>
         </div>
+      </div>
 
-        <div
-          id="curator-feed-default-feed-layout"
-          :class="{ 'opacity-0': !curatorLoaded, 'opacity-100 transition-opacity duration-500': curatorLoaded }"
-        >
-          <a href="https://curator.io" target="_blank" class="crt-logo crt-tag">Powered by Curator.io</a>
+      <div v-else-if="error || posts.length === 0" class="text-center py-16" data-aos="fade-up">
+        <div class="ghibli-card p-8 max-w-md mx-auto">
+          <Icon name="mdi:instagram" class="w-12 h-12 text-ghibli-brown-300 mx-auto mb-4" />
+          <p class="text-ghibli-brown-500 mb-4">
+            Postingan Instagram akan segera tersedia
+          </p>
+          <a
+            href="https://www.instagram.com/daily.jeds"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="ghibli-button inline-flex items-center gap-2"
+            @click="trackClick('instagram_follow_cta')"
+          >
+            <Icon name="mdi:instagram" class="w-5 h-5" />
+            <span>Follow @daily.jeds</span>
+          </a>
         </div>
+      </div>
+
+      <div v-else class="grid grid-cols-2 sm:grid-cols-3 gap-4" data-aos="fade-up" data-aos-delay="200">
+        <a
+          v-for="post in posts"
+          :key="post.id"
+          :href="post.permalink"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group relative aspect-square rounded-2xl overflow-hidden shadow-ghibli hover:shadow-ghibli-hover transition-all duration-300 hover:scale-[1.02]"
+          @click="trackClick(`instagram_post_${post.id}`)"
+        >
+          <NuxtImg
+            :src="getMediaUrl(post)"
+            :alt="truncateCaption(post.caption)"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            loading="lazy"
+            placeholder
+            sizes="sm:50vw md:33vw lg:300px"
+          />
+          
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div class="absolute bottom-0 left-0 right-0 p-4">
+              <p class="text-white text-sm leading-relaxed line-clamp-2">
+                {{ truncateCaption(post.caption, 100) }}
+              </p>
+              <div class="flex items-center gap-2 mt-2">
+                <Icon v-if="post.media_type === 'VIDEO'" name="mdi:play-circle" class="w-4 h-4 text-white/80" />
+                <Icon v-else-if="post.media_type === 'CAROUSEL_ALBUM'" name="mdi:camera-burst" class="w-4 h-4 text-white/80" />
+                <span class="text-white/70 text-xs">{{ formatDate(post.timestamp) }}</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div v-if="posts.length > 0" class="text-center mt-10" data-aos="fade-up" data-aos-delay="400">
+        <a
+          href="https://www.instagram.com/daily.jeds"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="ghibli-button-secondary inline-flex items-center gap-2"
+          @click="trackClick('instagram_see_more')"
+        >
+          <Icon name="mdi:instagram" class="w-5 h-5" />
+          <span>Lihat Lebih Banyak</span>
+        </a>
       </div>
     </div>
   </section>
 </template>
-
-<style scoped>
-#curator-feed-default-feed-layout :deep(.crt-logo.crt-tag) {
-  display: none !important;
-}
-</style>
