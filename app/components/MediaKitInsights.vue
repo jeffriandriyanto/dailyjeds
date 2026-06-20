@@ -165,7 +165,7 @@ const monthlyTrendData = computed(() => {
 
   const currentMonth = new Date().getMonth()
   const last6Months = []
-  for (let i = 5; i >= 0; i--) {
+  for (let i = 2; i >= 0; i--) {
     const monthIndex = (currentMonth - i + 12) % 12
     last6Months.push(months[monthIndex])
   }
@@ -463,7 +463,7 @@ const truncateCaption = (caption?: string, maxLength = 40) => {
 
             <div class="ghibli-card p-6 shadow-ghibli" data-aos="fade-up" data-aos-delay="500">
               <h3 class="text-lg font-ghibli font-semibold text-ghibli-brown-700 mb-4">
-                Tren Engagement (6 Bulan Terakhir)
+                Tren Engagement (3 Bulan Terakhir)
               </h3>
               <div class="h-[300px] sm:h-[350px]">
                 <Line :data="monthlyTrendData" :options="lineChartOptions" />
@@ -472,95 +472,84 @@ const truncateCaption = (caption?: string, maxLength = 40) => {
           </div>
 
           <div v-else-if="activeTab === 'audience'" key="audience">
-            <div class="grid lg:grid-cols-2 gap-6 mb-6">
-              <div class="ghibli-card p-6 shadow-ghibli" data-aos="fade-up" data-aos-delay="200">
-                <h3 class="text-lg font-ghibli font-semibold text-ghibli-brown-700 mb-4">
-                  Demografi Audiens
-                </h3>
-                <div class="space-y-6">
-                  <div>
-                    <p class="text-sm text-ghibli-brown-400 mb-3">Gender (Estimasi)</p>
-                    <div class="flex items-center gap-4">
-                      <div class="flex-1">
-                        <div class="flex items-center justify-between mb-1">
-                          <span class="text-ghibli-brown-600 text-sm">Female</span>
-                          <span class="text-ghibli-brown-500 text-sm font-medium">85%</span>
-                        </div>
-                        <div class="w-full h-3 bg-ghibli-cream rounded-full overflow-hidden">
-                          <div class="h-full bg-ghibli-green-400 rounded-full" style="width: 85%" />
-                        </div>
-                      </div>
-                      <div class="flex-1">
-                        <div class="flex items-center justify-between mb-1">
-                          <span class="text-ghibli-brown-600 text-sm">Male</span>
-                          <span class="text-ghibli-brown-500 text-sm font-medium">15%</span>
-                        </div>
-                        <div class="w-full h-3 bg-ghibli-cream rounded-full overflow-hidden">
-                          <div class="h-full bg-ghibli-amber-400 rounded-full" style="width: 15%" />
-                        </div>
-                      </div>
-                    </div>
+            <div class="ghibli-card p-6 shadow-ghibli mb-6" data-aos="fade-up" data-aos-delay="200">
+              <h3 class="text-lg font-ghibli font-semibold text-ghibli-brown-700 mb-6">
+                Statistik Engagement
+              </h3>
+              <div class="grid sm:grid-cols-3 gap-6">
+                <div class="text-center p-6 bg-ghibli-cream-light rounded-xl">
+                  <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-ghibli-green-100 flex items-center justify-center">
+                    <Icon name="mdi:chart-areaspline" class="w-7 h-7 text-ghibli-green-600" />
                   </div>
-
-                  <div>
-                    <p class="text-sm text-ghibli-brown-400 mb-3">Rentang Usia (Estimasi)</p>
-                    <div class="space-y-3">
-                      <div v-for="age in [
-                        { label: '25-34', value: 45 },
-                        { label: '35-44', value: 25 },
-                        { label: '18-24', value: 15 },
-                        { label: '45-54', value: 10 },
-                        { label: '55+', value: 5 },
-                      ]" :key="age.label">
-                        <div class="flex items-center justify-between mb-1">
-                          <span class="text-ghibli-brown-600 text-sm">{{ age.label }}</span>
-                          <span class="text-ghibli-brown-500 text-sm font-medium">{{ age.value }}%</span>
-                        </div>
-                        <div class="w-full h-3 bg-ghibli-cream rounded-full overflow-hidden">
-                          <div class="h-full bg-ghibli-green-500 rounded-full transition-all duration-700" :style="{ width: `${age.value}%` }" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <p class="text-3xl font-bold text-ghibli-green-600 font-ghibli">{{ contentStats.engagementRate }}%</p>
+                  <p class="text-ghibli-brown-400 text-sm mt-1">Engagement Rate</p>
                 </div>
-              </div>
-
-              <div class="ghibli-card p-6 shadow-ghibli" data-aos="fade-up" data-aos-delay="300">
-                <h3 class="text-lg font-ghibli font-semibold text-ghibli-brown-700 mb-4">
-                  Lokasi Teratas (Estimasi)
-                </h3>
-                <div class="h-[280px]">
-                  <Bar :data="{
-                    labels: ['Salatiga', 'Semarang', 'Jakarta', 'Surabaya', 'Yogyakarta'],
-                    datasets: [{
-                      label: 'Followers',
-                      data: [2800, 1500, 1200, 800, 600],
-                      backgroundColor: 'rgba(128, 177, 101, 0.8)',
-                      borderColor: '#80B165',
-                      borderWidth: 1,
-                      borderRadius: 4,
-                    }]
-                  }" :options="barChartOptions" />
+                <div class="text-center p-6 bg-ghibli-cream-light rounded-xl">
+                  <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-ghibli-amber-100 flex items-center justify-center">
+                    <Icon name="mdi:heart" class="w-7 h-7 text-ghibli-amber-600" />
+                  </div>
+                  <p class="text-3xl font-bold text-ghibli-amber-600 font-ghibli">{{ formatNumber(contentStats.avgLikes) }}</p>
+                  <p class="text-ghibli-brown-400 text-sm mt-1">Avg. Likes/Post</p>
+                </div>
+                <div class="text-center p-6 bg-ghibli-cream-light rounded-xl">
+                  <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-ghibli-wood-100 flex items-center justify-center">
+                    <Icon name="mdi:comment" class="w-7 h-7 text-ghibli-wood-500" />
+                  </div>
+                  <p class="text-3xl font-bold text-ghibli-wood-500 font-ghibli">{{ formatNumber(contentStats.avgComments) }}</p>
+                  <p class="text-ghibli-brown-400 text-sm mt-1">Avg. Comments/Post</p>
                 </div>
               </div>
             </div>
 
-            <div class="ghibli-card p-6 shadow-ghibli" data-aos="fade-up" data-aos-delay="400">
-              <h3 class="text-lg font-ghibli font-semibold text-ghibli-brown-700 mb-4">
-                Statistik Engagement
-              </h3>
-              <div class="grid sm:grid-cols-3 gap-4">
-                <div class="text-center p-4 bg-ghibli-cream-light rounded-xl">
-                  <p class="text-2xl font-bold text-ghibli-green-600 font-ghibli">{{ contentStats.engagementRate }}%</p>
-                  <p class="text-ghibli-brown-400 text-sm mt-1">Engagement Rate</p>
+            <div class="grid sm:grid-cols-2 gap-6">
+              <div class="ghibli-card p-6 shadow-ghibli" data-aos="fade-up" data-aos-delay="300">
+                <h3 class="text-lg font-ghibli font-semibold text-ghibli-brown-700 mb-4">
+                  Total Engagement
+                </h3>
+                <div class="space-y-4">
+                  <div class="flex items-center justify-between p-4 bg-ghibli-cream-light rounded-xl">
+                    <div class="flex items-center gap-3">
+                      <Icon name="mdi:heart" class="w-6 h-6 text-red-500" />
+                      <span class="text-ghibli-brown-600">Total Likes</span>
+                    </div>
+                    <span class="text-xl font-bold text-ghibli-brown-700 font-ghibli">{{ formatNumber(contentStats.totalLikes) }}</span>
+                  </div>
+                  <div class="flex items-center justify-between p-4 bg-ghibli-cream-light rounded-xl">
+                    <div class="flex items-center gap-3">
+                      <Icon name="mdi:comment" class="w-6 h-6 text-blue-500" />
+                      <span class="text-ghibli-brown-600">Total Comments</span>
+                    </div>
+                    <span class="text-xl font-bold text-ghibli-brown-700 font-ghibli">{{ formatNumber(contentStats.totalComments) }}</span>
+                  </div>
                 </div>
-                <div class="text-center p-4 bg-ghibli-cream-light rounded-xl">
-                  <p class="text-2xl font-bold text-ghibli-amber-600 font-ghibli">{{ formatNumber(contentStats.avgLikes) }}</p>
-                  <p class="text-ghibli-brown-400 text-sm mt-1">Avg. Likes/Post</p>
-                </div>
-                <div class="text-center p-4 bg-ghibli-cream-light rounded-xl">
-                  <p class="text-2xl font-bold text-ghibli-wood-500 font-ghibli">{{ formatNumber(contentStats.avgComments) }}</p>
-                  <p class="text-ghibli-brown-400 text-sm mt-1">Avg. Comments/Post</p>
+              </div>
+
+              <div class="ghibli-card p-6 shadow-ghibli" data-aos="fade-up" data-aos-delay="400">
+                <h3 class="text-lg font-ghibli font-semibold text-ghibli-brown-700 mb-4">
+                  Reach & Impressions
+                </h3>
+                <div class="space-y-4">
+                  <div class="flex items-center justify-between p-4 bg-ghibli-cream-light rounded-xl">
+                    <div class="flex items-center gap-3">
+                      <Icon name="mdi:eye" class="w-6 h-6 text-ghibli-amber-600" />
+                      <span class="text-ghibli-brown-600">Impressions</span>
+                    </div>
+                    <span class="text-xl font-bold text-ghibli-brown-700 font-ghibli">{{ formatNumber(metrics.impressions) }}</span>
+                  </div>
+                  <div class="flex items-center justify-between p-4 bg-ghibli-cream-light rounded-xl">
+                    <div class="flex items-center gap-3">
+                      <Icon name="mdi:chart-bar" class="w-6 h-6 text-ghibli-wood-500" />
+                      <span class="text-ghibli-brown-600">Reach</span>
+                    </div>
+                    <span class="text-xl font-bold text-ghibli-brown-700 font-ghibli">{{ formatNumber(metrics.reach) }}</span>
+                  </div>
+                  <div class="flex items-center justify-between p-4 bg-ghibli-cream-light rounded-xl">
+                    <div class="flex items-center gap-3">
+                      <Icon name="mdi:account-arrow-right" class="w-6 h-6 text-ghibli-brown-500" />
+                      <span class="text-ghibli-brown-600">Profile Visits</span>
+                    </div>
+                    <span class="text-xl font-bold text-ghibli-brown-700 font-ghibli">{{ formatNumber(metrics.profileViews) }}</span>
+                  </div>
                 </div>
               </div>
             </div>
