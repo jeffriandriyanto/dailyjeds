@@ -22,7 +22,7 @@ const sources = [
             },
             {
                 "loc": "/mediakit",
-                "lastmod": "2026-06-20T13:32:47.927Z"
+                "lastmod": "2026-06-20T14:22:44.703Z"
             }
         ],
         "sourceType": "app"

@@ -398,7 +398,7 @@ const _routes = [
   {
     name: "mediakit",
     path: "/mediakit",
-    component: () => import('./mediakit-x5zvLmfX.mjs')
+    component: () => import('./mediakit-DnO9Jip7.mjs')
   }
 ];
 const _wrapInTransition = (props, children) => {

@@ -68,12 +68,12 @@ const { data: insightsData, status } = await useFetch('/api/instagram/insights',
 
 const account = computed(() => {
   const raw = insightsData.value as any
-  return raw?.account || {}
+  return raw?.account || { name: '', username: '', followers_count: 0, media_count: 0, profile_picture_url: null }
 })
 
 const isMock = computed(() => {
   const raw = insightsData.value as any
-  return raw?.isMock === true
+  return raw?.isMock === true || !!raw?.error
 })
 
 const insights = computed(() => {
@@ -92,12 +92,14 @@ const metrics = computed(() => {
     return metric?.values?.[0]?.value || metric?.total_value?.value || 0
   }
 
+  const followers = account.value?.followers_count || 0
+
   return {
     impressions: getMetricValue('impressions'),
     reach: getMetricValue('reach'),
     profileViews: getMetricValue('profile_views'),
-    followers: account.value.followers_count || 0,
-    mediaCount: account.value.media_count || 0,
+    followers,
+    mediaCount: account.value?.media_count || 0,
   }
 })
 
@@ -335,7 +337,8 @@ const barChartOptions = {
   },
 }
 
-const formatNumber = (num: number): string => {
+const formatNumber = (num: number | undefined | null): string => {
+  if (num === undefined || num === null || isNaN(num)) return '0'
   if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M'
   if (num >= 1000) return (num / 1000).toFixed(1) + 'K'
   return num.toString()
@@ -420,7 +423,7 @@ const truncateCaption = (caption?: string, maxLength = 40) => {
           mode="out-in"
         >
           <div v-if="activeTab === 'overview'" key="overview">
-            <div class="ghibli-card p-6 shadow-ghibli mb-6" data-aos="fade-up" data-aos-delay="150">
+            <div v-if="account?.name" class="ghibli-card p-6 shadow-ghibli mb-6" data-aos="fade-up" data-aos-delay="150">
               <div class="flex flex-col sm:flex-row items-center gap-6">
                 <div v-if="account.profile_picture_url" class="w-20 h-20 rounded-full overflow-hidden shadow-ghibli flex-shrink-0">
                   <img :src="account.profile_picture_url" :alt="account.name" class="w-full h-full object-cover" />
