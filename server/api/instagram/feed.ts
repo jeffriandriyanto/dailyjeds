@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
   const fields = 'id,caption,media_type,media_url,thumbnail_url,permalink,timestamp'
   const limit = 9
   
-  const url = `https://graph.facebook.com/v21.0/${INSTAGRAM_ACCOUNT_ID}/media?fields=${fields}&limit=${limit}&access_token=${ACCESS_TOKEN}`
+  const url = `https://graph.facebook.com/v25.0/${INSTAGRAM_ACCOUNT_ID}/media?fields=${fields}&limit=${limit}&access_token=${ACCESS_TOKEN}`
 
   try {
     const response = await $fetch<{

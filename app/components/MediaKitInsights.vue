@@ -59,6 +59,11 @@ const account = computed(() => {
   return raw?.account || {}
 })
 
+const isMock = computed(() => {
+  const raw = insightsData.value as any
+  return raw?.isMock === true
+})
+
 const metrics = computed(() => {
   const raw = insightsData.value as any
   const insights = raw?.insights?.data || []
@@ -367,6 +372,17 @@ const formatNumber = (num: number): string => {
         <div class="flex flex-col items-center gap-4">
           <div class="w-10 h-10 border-3 border-ghibli-green-300 border-t-ghibli-green-600 rounded-full animate-spin" />
           <p class="text-ghibli-brown-400 text-sm">Memuat data insights...</p>
+        </div>
+      </div>
+
+      <div v-else-if="isMock" class="mb-6">
+        <div class="ghibli-card p-4 border-l-4 border-ghibli-amber-400 bg-ghibli-amber-50">
+          <div class="flex items-center gap-3">
+            <Icon name="mdi:information-outline" class="w-5 h-5 text-ghibli-amber-600 flex-shrink-0" />
+            <p class="text-ghibli-brown-600 text-sm">
+              <span class="font-semibold">Preview Mode:</span> Menampilkan data contoh. Data real akan muncul setelah integrasi Instagram Graph API aktif.
+            </p>
+          </div>
         </div>
       </div>
 

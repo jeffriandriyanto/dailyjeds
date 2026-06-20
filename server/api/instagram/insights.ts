@@ -28,21 +28,21 @@ export default defineEventHandler(async (event) => {
 
 async function fetchAccountData(accountId: string, token: string) {
   const fields = 'name,username,followers_count,media_count,profile_picture_url'
-  const url = `https://graph.facebook.com/v21.0/${accountId}?fields=${fields}&access_token=${token}`
+  const url = `https://graph.facebook.com/v25.0/${accountId}?fields=${fields}&access_token=${token}`
   return await $fetch(url)
 }
 
 async function fetchInsights(accountId: string, token: string) {
   const metrics = 'impressions,reach,profile_views,follower_count'
   const period = 'day'
-  const url = `https://graph.facebook.com/v21.0/${accountId}/insights?metric=${metrics}&period=${period}&access_token=${token}`
+  const url = `https://graph.facebook.com/v25.0/${accountId}/insights?metric=${metrics}&period=${period}&access_token=${token}`
   return await $fetch(url)
 }
 
 async function fetchRecentMedia(accountId: string, token: string) {
   const fields = 'id,caption,media_type,like_count,comments_count,timestamp,permalink'
   const limit = 12
-  const url = `https://graph.facebook.com/v21.0/${accountId}/media?fields=${fields}&limit=${limit}&access_token=${token}`
+  const url = `https://graph.facebook.com/v25.0/${accountId}/media?fields=${fields}&limit=${limit}&access_token=${token}`
   return await $fetch(url)
 }
 

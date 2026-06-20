@@ -1,6 +1,3 @@
-# API routes to Netlify Functions
-/api/*  /.netlify/functions/server/api/:splat  200
-
 # Redirect HTTP to HTTPS
 http://*    https://dailyjeds.netlify.app/:splat   301!
 
