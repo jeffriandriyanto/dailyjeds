@@ -39,9 +39,9 @@ const typedText = ref('')
 const fullText = 'Welcome to Our Home'
 
 const stats = [
-  { label: 'Tahun Bersama', value: '7+', icon: 'mdi:heart' },
+  { label: 'Tahun Bersama', value: '14+', icon: 'mdi:heart' },
   { label: 'Followers', value: '8K+', icon: 'mdi:account-group' },
-  { label: 'Kolaborasi Brand', value: '20+', icon: 'mdi:handshake' },
+  { label: 'Kolaborasi Brand', value: '30+', icon: 'mdi:handshake' },
 ]
 
 const toggleBlock = (id: string) => {

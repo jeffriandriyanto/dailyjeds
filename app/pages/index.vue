@@ -79,6 +79,10 @@ const scrollToTop = () => {
       <JourneyTimeline />
 
       <ServicesGrid />
+
+      <FaqSection />
+
+      <InstagramFeed />
     </main>
 
     <FooterSection />
