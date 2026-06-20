@@ -125,11 +125,10 @@ const getMediaUrl = (post: InstagramPost) => {
           class="group relative aspect-square rounded-2xl overflow-hidden shadow-ghibli hover:shadow-ghibli-hover transition-all duration-300 hover:scale-[1.02]"
           @click="trackClick(`instagram_post_${post.id}`)"
         >
-          <img
-            :src="getMediaUrl(post)"
-            :alt="truncateCaption(post.caption)"
-            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            loading="lazy"
+          <div
+            class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+            :style="{ backgroundImage: `url(${getMediaUrl(post)})` }"
+            :aria-label="truncateCaption(post.caption)"
           />
           
           <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
