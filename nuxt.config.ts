@@ -29,17 +29,7 @@ export default defineNuxtConfig({
           async: true,
         },
         {
-          src: "https://www.googletagmanager.com/gtag/js?id=G-TF7EZTTHX2",
-          async: true,
-        },
-        {
-          children: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-64NDFVZN62');
-            gtag('config', 'G-TF7EZTTHX2');
-          `,
+          innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-64NDFVZN62'); gtag('config', 'G-TF7EZTTHX2');`,
         },
       ],
     },
