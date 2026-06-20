@@ -1,6 +1,6 @@
 import { mergeProps, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrInterpolate } from 'vue/server-renderer';
-import { _ as _export_sfc, d as useHead } from './server.mjs';
+import { _ as _export_sfc, u as useHead } from './server.mjs';
 import '../nitro/nitro.mjs';
 import 'node:http';
 import 'node:https';
@@ -14,6 +14,7 @@ import 'consola';
 import 'node:url';
 import 'ipx';
 import 'vue-router';
+import '@unhead/schema-org/vue';
 import 'tailwindcss/colors';
 import '@iconify/vue';
 import '../routes/renderer.mjs';
@@ -76,4 +77,4 @@ _sfc_main.setup = (props, ctx) => {
 const error500 = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-d08fec65"]]);
 
 export { error500 as default };
-//# sourceMappingURL=error-500-C88rIJM5.mjs.map
+//# sourceMappingURL=error-500-BZKGZFly.mjs.map

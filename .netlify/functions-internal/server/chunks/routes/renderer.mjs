@@ -1,5 +1,5 @@
 import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'vue-bundle-renderer/runtime';
-import { b as buildAssetsURL, u as useRuntimeConfig, g as getResponseStatusText, a as getResponseStatus, d as defineRenderHandler, p as publicAssetsURL, c as getQuery, e as createError, f as destr, h as getRouteRules, i as useNitroApp } from '../nitro/nitro.mjs';
+import { b as buildAssetsURL, u as useRuntimeConfig, g as getResponseStatusText, a as getResponseStatus, c as defineRenderHandler, p as publicAssetsURL, e as getQuery, f as createError, h as destr, i as getRouteRules, j as useNitroApp } from '../nitro/nitro.mjs';
 import { renderToString } from 'vue/server-renderer';
 import { createHead as createHead$1, propsToString, renderSSRHead } from 'unhead/server';
 import { stringify, uneval } from 'devalue';
@@ -71,7 +71,7 @@ function createHead(options = {}) {
   return head;
 }
 
-const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"},{"name":"description","content":"Daily Activity, Home & Living, Review, Tips & Tricks, Healthy Lifestyle, Mom’s Life. 📍 Salatiga, Indonesia | Follow @daily.jeds di TikTok & Instagram."},{"name":"keywords","content":"daily jeds, jeds journey, daily activity, home living, review, tips tricks, healthy lifestyle, mom life, salatiga"},{"property":"og:type","content":"website"},{"property":"og:title","content":"Jeds Journey (@daily.jeds) | Daily Activity, Home & Living, Review"},{"property":"og:description","content":"Ikuti @daily.jeds (Jeds Journey) untuk Daily Activity, Home & Living, Tips, Healthy Lifestyle & Mom’s Life. 📍 Salatiga, Indonesia"},{"property":"og:image","content":"/profile.jpg"},{"name":"twitter:card","content":"summary_large_image"}],"link":[],"style":[],"script":[],"noscript":[],"title":"Jeds Journey (@daily.jeds) | Daily Activity, Home & Living, Review"};
+const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[{"src":"https://www.googletagmanager.com/gtag/js?id=G-64NDFVZN62","async":true},{"innerHTML":"window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-64NDFVZN62'); gtag('config', 'G-TF7EZTTHX2');"}],"noscript":[]};
 
 const appRootTag = "div";
 

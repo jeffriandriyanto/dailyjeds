@@ -8,7 +8,10 @@
     "@fastify/accept-negotiator": "1.1.0",
     "@iconify/utils": "2.3.0",
     "@iconify/vue": "5.0.0",
+    "@kurkle/color": "0.3.4",
     "@trysound/sax": "0.2.0",
+    "@unhead/schema-org": "2.1.15",
+    "@unhead/vue": "2.0.14",
     "@vue/compiler-core": "3.5.20",
     "@vue/compiler-dom": "3.5.20",
     "@vue/compiler-ssr": "3.5.20",
@@ -19,6 +22,7 @@
     "@vue/server-renderer": "3.5.20",
     "@vue/shared": "3.5.20",
     "boolbase": "1.0.0",
+    "chart.js": "4.5.1",
     "color": "4.2.3",
     "color-convert": "2.0.1",
     "color-name": "1.1.4",
@@ -72,6 +76,7 @@
     "unhead": "2.0.14",
     "vue": "3.5.20",
     "vue-bundle-renderer": "2.1.2",
+    "vue-chartjs": "5.3.3",
     "vue-router": "4.5.1"
   }
 }

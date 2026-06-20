@@ -17,7 +17,12 @@ const sources = [
         },
         "urls": [
             {
-                "loc": "/"
+                "loc": "/",
+                "lastmod": "2026-06-20T09:34:35.335Z"
+            },
+            {
+                "loc": "/mediakit",
+                "lastmod": "2026-06-20T13:32:47.927Z"
             }
         ],
         "sourceType": "app"

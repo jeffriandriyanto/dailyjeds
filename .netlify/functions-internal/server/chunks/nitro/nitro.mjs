@@ -4214,6 +4214,18 @@ function splitByCase(str, separators) {
   parts.push(buff);
   return parts;
 }
+function upperFirst(str) {
+  return str ? str[0].toUpperCase() + str.slice(1) : "";
+}
+function lowerFirst(str) {
+  return str ? str[0].toLowerCase() + str.slice(1) : "";
+}
+function pascalCase(str, opts) {
+  return str ? (Array.isArray(str) ? str : splitByCase(str)).map((p) => upperFirst(p)).join("") : "";
+}
+function camelCase(str, opts) {
+  return lowerFirst(pascalCase(str || ""));
+}
 function kebabCase(str, joiner) {
   return str ? (Array.isArray(str) ? str : splitByCase(str)).map((p) => p.toLowerCase()).join(joiner) : "";
 }
@@ -4262,7 +4274,7 @@ function _expandFromEnv(value) {
 const _inlineRuntimeConfig = {
   "app": {
     "baseURL": "/",
-    "buildId": "732f504a-62f9-4907-8c79-3b48ca31010a",
+    "buildId": "cd3c07c7-7613-41a5-8227-bbfcc78c2784",
     "buildAssetsDir": "/_nuxt/",
     "cdnURL": ""
   },
@@ -4301,6 +4313,7 @@ const _inlineRuntimeConfig = {
     }
   },
   "public": {
+    "siteUrl": "https://dailyjeds.netlify.app",
     "aos": {
       "duration": 800,
       "easing": "ease-out-cubic",
@@ -4309,6 +4322,8 @@ const _inlineRuntimeConfig = {
       "offset": 0
     }
   },
+  "instagramAccountId": "17841466398772538",
+  "instagramToken": "EAAbUU8kdiEwBR9ibsm3ZAWcFVHhEsNl3aKJlxcbF6ZC0ywGzz23XJNHUyZAQN4QeSLZCGfLqzp1fZCwkWHgRYK9LaQJfEBedTyeaOLORgwMyFsPednWiRjfQjkEkgZC3iGiE8fc1gTNX6GI5CcXPmplQZAABt3nede1d99zpRjOzSeJhk0ZBWnIzQuWGJwsozzLGTFZAsn4ROZAqhtZAj7ZCrXZAOAmmdH1Pnb6qXaEdmXJZB2xe31EReJXVhFHLo4hdvbouajZCmjqh9TkXwGj4x0ZD",
   "icon": {
     "serverKnownCssClasses": []
   },
@@ -4318,7 +4333,7 @@ const _inlineRuntimeConfig = {
     "isMultiSitemap": false,
     "excludeAppSources": [],
     "cacheMaxAgeSeconds": 600,
-    "autoLastmod": false,
+    "autoLastmod": true,
     "defaultSitemapsChunkSize": 1000,
     "minify": false,
     "sortEntries": true,
@@ -4351,7 +4366,9 @@ const _inlineRuntimeConfig = {
       "sitemap.xml": {
         "sitemapName": "sitemap.xml",
         "route": "sitemap.xml",
-        "defaults": {},
+        "defaults": {
+          "lastmod": "2026-06-20T13:45:37Z"
+        },
         "include": [],
         "exclude": [
           "/_**",
@@ -4360,6 +4377,15 @@ const _inlineRuntimeConfig = {
         "includeAppSources": true
       }
     }
+  },
+  "nuxt-schema-org": {
+    "reactive": false,
+    "minify": true,
+    "scriptAttributes": {
+      "data-nuxt-schema-org": true
+    },
+    "identity": "",
+    "version": "5.0.6"
   },
   "nuxt-site-config": {
     "stack": [
@@ -4386,7 +4412,12 @@ const _inlineRuntimeConfig = {
       "dir": "../../../dist"
     },
     "http": {
-      "domains": []
+      "domains": [
+        "scontent.cdninstagram.com",
+        "scontent-cgk1-1.cdninstagram.com",
+        "scontent-lax3-1.cdninstagram.com",
+        "platform-lookaside.fbsbx.com"
+      ]
     }
   }
 };
@@ -5108,7 +5139,7 @@ function useSiteConfig(e, _options) {
   return e.context.siteConfig.get(options);
 }
 
-const _UQU2lwrDOJRXEogP269wF8kx01fj6CyQsYToMd39FY = defineNitroPlugin(async (nitroApp) => {
+const _PVeUgDfe8GFGX510UaVeh1z6bBxJTUxaQAwtqtRXxM = defineNitroPlugin(async (nitroApp) => {
   nitroApp.hooks.hook("render:html", async (ctx, { event }) => {
     const routeOptions = getRouteRules(event);
     const isIsland = process.env.NUXT_COMPONENT_ISLANDS && event.path.startsWith("/__nuxt_island");
@@ -5125,15 +5156,15 @@ const _UQU2lwrDOJRXEogP269wF8kx01fj6CyQsYToMd39FY = defineNitroPlugin(async (nit
 
 const script = "\"use strict\";(()=>{const t=window,e=document.documentElement,c=[\"dark\",\"light\"],n=getStorageValue(\"localStorage\",\"nuxt-color-mode\")||\"system\";let i=n===\"system\"?u():n;const r=e.getAttribute(\"data-color-mode-forced\");r&&(i=r),l(i),t[\"__NUXT_COLOR_MODE__\"]={preference:n,value:i,getColorScheme:u,addColorScheme:l,removeColorScheme:d};function l(o){const s=\"\"+o+\"\",a=\"\";e.classList?e.classList.add(s):e.className+=\" \"+s,a&&e.setAttribute(\"data-\"+a,o)}function d(o){const s=\"\"+o+\"\",a=\"\";e.classList?e.classList.remove(s):e.className=e.className.replace(new RegExp(s,\"g\"),\"\"),a&&e.removeAttribute(\"data-\"+a)}function f(o){return t.matchMedia(\"(prefers-color-scheme\"+o+\")\")}function u(){if(t.matchMedia&&f(\"\").media!==\"not all\"){for(const o of c)if(f(\":\"+o).matches)return o}return\"light\"}})();function getStorageValue(t,e){switch(t){case\"localStorage\":return window.localStorage.getItem(e);case\"sessionStorage\":return window.sessionStorage.getItem(e);case\"cookie\":return getCookie(e);default:return null}}function getCookie(t){const c=(\"; \"+window.document.cookie).split(\"; \"+t+\"=\");if(c.length===2)return c.pop()?.split(\";\").shift()}";
 
-const _htMuBn3XB7WOT9R5uZgfPJPL1Y3WRaLuKaUIKUXrYk = (function(nitro) {
+const _y0iFS_j_AILQCirFNa21N9VlTL7k0jTeoQXEhWY8FYQ = (function(nitro) {
   nitro.hooks.hook("render:html", (htmlContext) => {
     htmlContext.head.push(`<script>${script}<\/script>`);
   });
 });
 
 const plugins = [
-  _UQU2lwrDOJRXEogP269wF8kx01fj6CyQsYToMd39FY,
-_htMuBn3XB7WOT9R5uZgfPJPL1Y3WRaLuKaUIKUXrYk
+  _PVeUgDfe8GFGX510UaVeh1z6bBxJTUxaQAwtqtRXxM,
+_y0iFS_j_AILQCirFNa21N9VlTL7k0jTeoQXEhWY8FYQ
 ];
 
 const _DRIVE_LETTER_START_RE = /^[A-Za-z]:\//;
@@ -5394,10 +5425,11 @@ function createSitePathResolver(e, options = {}) {
 }
 
 const collections = {
+  'mdi': () => import('../_/icons.mjs').then(m => m.default),
 };
 
 const DEFAULT_ENDPOINT = "https://api.iconify.design";
-const _LbDjnn = defineCachedEventHandler(async (event) => {
+const _KiuWc3 = defineCachedEventHandler(async (event) => {
   const url = getRequestURL(event);
   if (!url)
     return createError$1({ status: 400, message: "Invalid icon request" });
@@ -5447,7 +5479,7 @@ const _LbDjnn = defineCachedEventHandler(async (event) => {
   // 1 week
 });
 
-const _xXp9k7 = eventHandler(async (e) => {
+const _BMaKnz = eventHandler(async (e) => {
   if (e.context._initedSiteConfig)
     return;
   const runtimeConfig = useRuntimeConfig(e);
@@ -5595,7 +5627,7 @@ function useSitemapRuntimeConfig(e) {
   return Object.freeze(clone);
 }
 
-const _vipBTW = defineEventHandler(async (e) => {
+const _LIHwUd = defineEventHandler(async (e) => {
   const fixPath = createSitePathResolver(e, { absolute: false, withBase: true });
   const { sitemapName: fallbackSitemapName, cacheMaxAgeSeconds, version, xslColumns, xslTips } = useSitemapRuntimeConfig();
   setHeader(e, "Content-Type", "application/xslt+xml");
@@ -7092,7 +7124,7 @@ async function createSitemap(event, definition, runtimeConfig) {
   return xml;
 }
 
-const _2N6Iy2 = defineEventHandler(async (e) => {
+const _EFSYux = defineEventHandler(async (e) => {
   const runtimeConfig = useSitemapRuntimeConfig();
   const { sitemaps } = runtimeConfig;
   if ("index" in sitemaps) {
@@ -7103,7 +7135,7 @@ const _2N6Iy2 = defineEventHandler(async (e) => {
 
 const _SxA8c9 = defineEventHandler(() => {});
 
-const _y6TcpR = lazyEventHandler(() => {
+const _bJzSDC = lazyEventHandler(() => {
   const opts = useRuntimeConfig().ipx || {};
   const fsDir = opts?.fs?.dir ? (Array.isArray(opts.fs.dir) ? opts.fs.dir : [opts.fs.dir]).map((dir) => isAbsolute(dir) ? dir : fileURLToPath(new URL(dir, globalThis._importMeta_.url))) : void 0;
   const fsStorage = opts.fs?.dir ? ipxFSStorage({ ...opts.fs, dir: fsDir }) : void 0;
@@ -7121,17 +7153,21 @@ const _y6TcpR = lazyEventHandler(() => {
   return useBase(opts.baseURL, ipxHandler);
 });
 
-const _lazy_xVymmt = () => import('../routes/renderer.mjs').then(function (n) { return n.r; });
+const _lazy_Fc3KGI = () => import('../routes/api/instagram/feed.mjs');
+const _lazy_EwZeZB = () => import('../routes/api/instagram/insights.mjs');
+const _lazy_LoSiFV = () => import('../routes/renderer.mjs').then(function (n) { return n.r; });
 
 const handlers = [
-  { route: '/__nuxt_error', handler: _lazy_xVymmt, lazy: true, middleware: false, method: undefined },
-  { route: '/api/_nuxt_icon/:collection', handler: _LbDjnn, lazy: false, middleware: false, method: undefined },
-  { route: '', handler: _xXp9k7, lazy: false, middleware: true, method: undefined },
-  { route: '/__sitemap__/style.xsl', handler: _vipBTW, lazy: false, middleware: false, method: undefined },
-  { route: '/sitemap.xml', handler: _2N6Iy2, lazy: false, middleware: false, method: undefined },
+  { route: '/api/instagram/feed', handler: _lazy_Fc3KGI, lazy: true, middleware: false, method: undefined },
+  { route: '/api/instagram/insights', handler: _lazy_EwZeZB, lazy: true, middleware: false, method: undefined },
+  { route: '/__nuxt_error', handler: _lazy_LoSiFV, lazy: true, middleware: false, method: undefined },
+  { route: '/api/_nuxt_icon/:collection', handler: _KiuWc3, lazy: false, middleware: false, method: undefined },
+  { route: '', handler: _BMaKnz, lazy: false, middleware: true, method: undefined },
+  { route: '/__sitemap__/style.xsl', handler: _LIHwUd, lazy: false, middleware: false, method: undefined },
+  { route: '/sitemap.xml', handler: _EFSYux, lazy: false, middleware: false, method: undefined },
   { route: '/__nuxt_island/**', handler: _SxA8c9, lazy: false, middleware: false, method: undefined },
-  { route: '/_ipx/**', handler: _y6TcpR, lazy: false, middleware: false, method: undefined },
-  { route: '/**', handler: _lazy_xVymmt, lazy: true, middleware: false, method: undefined }
+  { route: '/_ipx/**', handler: _bJzSDC, lazy: false, middleware: false, method: undefined },
+  { route: '/**', handler: _lazy_LoSiFV, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {
@@ -7318,5 +7354,5 @@ function getCacheHeaders(url) {
   return {};
 }
 
-export { $fetch$1 as $, parseURL as A, encodeParam as B, encodePath as C, parseQuery as D, withTrailingSlash as E, withoutTrailingSlash as F, handler as G, getResponseStatus as a, buildAssetsURL as b, getQuery as c, defineRenderHandler as d, createError$1 as e, destr as f, getResponseStatusText as g, getRouteRules as h, useNitroApp as i, defuFn as j, klona as k, hasProtocol as l, isScriptProtocol as m, joinURL as n, getContext as o, publicAssetsURL as p, baseURL as q, createHooks as r, sanitizeStatusCode as s, executeAsync as t, useRuntimeConfig as u, toRouteMatcher as v, withQuery as w, createRouter$1 as x, defu as y, withLeadingSlash as z };
+export { $fetch$1 as $, camelCase as A, withTrailingSlash as B, parseURL as C, withLeadingSlash as D, withoutTrailingSlash as E, withBase as F, encodeParam as G, encodePath as H, hash$1 as I, parseQuery as J, handler as K, getResponseStatus as a, buildAssetsURL as b, defineRenderHandler as c, defineEventHandler as d, getQuery as e, createError$1 as f, getResponseStatusText as g, destr as h, getRouteRules as i, useNitroApp as j, klona as k, defuFn as l, hasProtocol as m, isScriptProtocol as n, joinURL as o, publicAssetsURL as p, defu as q, getContext as r, sanitizeStatusCode as s, baseURL as t, useRuntimeConfig as u, createHooks as v, withQuery as w, executeAsync as x, toRouteMatcher as y, createRouter$1 as z };
 //# sourceMappingURL=nitro.mjs.map

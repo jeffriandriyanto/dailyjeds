@@ -1,7 +1,7 @@
 import { defineComponent, computed, h, onServerPrefetch, toValue, getCurrentInstance, ref, shallowRef, toRef, nextTick, unref } from 'vue';
 import { Icon, getIcon, loadIcon as loadIcon$1 } from '@iconify/vue';
 import { getIconCSS } from '@iconify/utils/lib/css/icon';
-import { a as useNuxtApp, h as useAppConfig, b as useRuntimeConfig, d as useHead, f as asyncDataDefaults, g as createError } from './server.mjs';
+import { a as useNuxtApp, k as useAppConfig, b as useRuntimeConfig, u as useHead, i as asyncDataDefaults, j as createError } from './server.mjs';
 import { debounce } from 'perfect-debounce';
 import '../nitro/nitro.mjs';
 import 'node:http';
@@ -16,6 +16,7 @@ import 'consola';
 import 'node:url';
 import 'ipx';
 import 'vue-router';
+import '@unhead/schema-org/vue';
 import 'tailwindcss/colors';
 import 'vue/server-renderer';
 import '../routes/renderer.mjs';
@@ -25,6 +26,7 @@ import 'devalue';
 import 'unhead/utils';
 
 function useAsyncData(...args) {
+  var _a, _b, _c, _d, _e, _f, _g, _h;
   const autoKey = typeof args[args.length - 1] === "string" ? args.pop() : void 0;
   if (_isAutoKeyNeeded(args[0], args[1])) {
     args.unshift(autoKey);
@@ -38,17 +40,17 @@ function useAsyncData(...args) {
     throw new TypeError("[nuxt] [useAsyncData] handler must be a function.");
   }
   const nuxtApp = useNuxtApp();
-  options.server ??= true;
-  options.default ??= getDefault;
-  options.getCachedData ??= getDefaultCachedData;
-  options.lazy ??= false;
-  options.immediate ??= true;
-  options.deep ??= asyncDataDefaults.deep;
-  options.dedupe ??= "cancel";
+  (_a = options.server) != null ? _a : options.server = true;
+  (_b = options.default) != null ? _b : options.default = getDefault;
+  (_c = options.getCachedData) != null ? _c : options.getCachedData = getDefaultCachedData;
+  (_d = options.lazy) != null ? _d : options.lazy = false;
+  (_e = options.immediate) != null ? _e : options.immediate = true;
+  (_f = options.deep) != null ? _f : options.deep = asyncDataDefaults.deep;
+  (_g = options.dedupe) != null ? _g : options.dedupe = "cancel";
   options._functionName || "useAsyncData";
   nuxtApp._asyncData[key.value];
   const initialFetchOptions = { cause: "initial", dedupe: options.dedupe };
-  if (!nuxtApp._asyncData[key.value]?._init) {
+  if (!((_h = nuxtApp._asyncData[key.value]) == null ? void 0 : _h._init)) {
     initialFetchOptions.cachedData = options.getCachedData(key.value, nuxtApp, { cause: "initial" });
     nuxtApp._asyncData[key.value] = createAsyncData(nuxtApp, key.value, _handler, options, initialFetchOptions.cachedData);
   }
@@ -67,10 +69,22 @@ function useAsyncData(...args) {
     }
   }
   const asyncReturn = {
-    data: writableComputedRef(() => nuxtApp._asyncData[key.value]?.data),
-    pending: writableComputedRef(() => nuxtApp._asyncData[key.value]?.pending),
-    status: writableComputedRef(() => nuxtApp._asyncData[key.value]?.status),
-    error: writableComputedRef(() => nuxtApp._asyncData[key.value]?.error),
+    data: writableComputedRef(() => {
+      var _a2;
+      return (_a2 = nuxtApp._asyncData[key.value]) == null ? void 0 : _a2.data;
+    }),
+    pending: writableComputedRef(() => {
+      var _a2;
+      return (_a2 = nuxtApp._asyncData[key.value]) == null ? void 0 : _a2.pending;
+    }),
+    status: writableComputedRef(() => {
+      var _a2;
+      return (_a2 = nuxtApp._asyncData[key.value]) == null ? void 0 : _a2.status;
+    }),
+    error: writableComputedRef(() => {
+      var _a2;
+      return (_a2 = nuxtApp._asyncData[key.value]) == null ? void 0 : _a2.error;
+    }),
     refresh: (...args2) => nuxtApp._asyncData[key.value].execute(...args2),
     execute: (...args2) => nuxtApp._asyncData[key.value].execute(...args2),
     clear: () => clearNuxtDataByKey(nuxtApp, key.value)
@@ -82,7 +96,8 @@ function useAsyncData(...args) {
 function writableComputedRef(getter) {
   return computed({
     get() {
-      return getter()?.value;
+      var _a;
+      return (_a = getter()) == null ? void 0 : _a.value;
     },
     set(value) {
       const ref2 = getter();
@@ -131,7 +146,8 @@ function pick(obj, keys) {
   return newObj;
 }
 function createAsyncData(nuxtApp, key, _handler, options, initialCachedData) {
-  nuxtApp.payload._errors[key] ??= void 0;
+  var _a, _b;
+  (_b = (_a = nuxtApp.payload._errors)[key]) != null ? _b : _a[key] = void 0;
   const hasCustomGetCachedData = options.getCachedData !== getDefaultCachedData;
   const handler = _handler ;
   const _ref = options.deep ? ref : shallowRef;
@@ -147,16 +163,17 @@ function createAsyncData(nuxtApp, key, _handler, options, initialCachedData) {
     error: toRef(nuxtApp.payload._errors, key),
     status: shallowRef("idle"),
     execute: (...args) => {
+      var _a2, _b2;
       const [_opts, newValue = void 0] = args;
       const opts = _opts && newValue === void 0 && typeof _opts === "object" ? _opts : {};
       if (nuxtApp._asyncDataPromises[key]) {
-        if ((opts.dedupe ?? options.dedupe) === "defer") {
+        if (((_a2 = opts.dedupe) != null ? _a2 : options.dedupe) === "defer") {
           return nuxtApp._asyncDataPromises[key];
         }
         nuxtApp._asyncDataPromises[key].cancelled = true;
       }
       {
-        const cachedData = "cachedData" in opts ? opts.cachedData : options.getCachedData(key, nuxtApp, { cause: opts.cause ?? "refresh:manual" });
+        const cachedData = "cachedData" in opts ? opts.cachedData : options.getCachedData(key, nuxtApp, { cause: (_b2 = opts.cause) != null ? _b2 : "refresh:manual" });
         if (cachedData !== void 0) {
           nuxtApp.payload.data[key] = asyncData.data.value = cachedData;
           asyncData.error.value = void 0;
@@ -210,13 +227,15 @@ function createAsyncData(nuxtApp, key, _handler, options, initialCachedData) {
     _init: true,
     _hash: void 0,
     _off: () => {
+      var _a2;
       unsubRefreshAsyncData();
-      if (nuxtApp._asyncData[key]?._init) {
+      if ((_a2 = nuxtApp._asyncData[key]) == null ? void 0 : _a2._init) {
         nuxtApp._asyncData[key]._init = false;
       }
       if (!hasCustomGetCachedData) {
         nextTick(() => {
-          if (!nuxtApp._asyncData[key]?._init) {
+          var _a3;
+          if (!((_a3 = nuxtApp._asyncData[key]) == null ? void 0 : _a3._init)) {
             clearNuxtDataByKey(nuxtApp, key);
             asyncData.execute = () => Promise.resolve();
           }
@@ -264,9 +283,10 @@ function useResolvedName(getName) {
   const options = useAppConfig().icon;
   const collections = (options.collections || []).sort((a, b) => b.length - a.length);
   return computed(() => {
+    var _a;
     const name = getName();
     const bare = name.startsWith(options.cssSelectorPrefix) ? name.slice(options.cssSelectorPrefix.length) : name;
-    const resolved = options.aliases?.[bare] || bare;
+    const resolved = ((_a = options.aliases) == null ? void 0 : _a[bare]) || bare;
     if (!resolved.includes(":")) {
       const collection = collections.find((c) => resolved.startsWith(c + "-"));
       return collection ? collection + ":" + resolved.slice(collection.length + 1) : resolved;
@@ -317,9 +337,10 @@ const NuxtIconCss = /* @__PURE__ */ defineComponent({
       return css;
     }
     onServerPrefetch(async () => {
+      var _a;
       {
         const configs = useRuntimeConfig().icon || {};
-        if (!configs?.serverKnownCssClasses?.includes(cssClass.value)) {
+        if (!((_a = configs == null ? void 0 : configs.serverKnownCssClasses) == null ? void 0 : _a.includes(cssClass.value))) {
           const icon = await loadIcon(props.name, options.fetchTimeout).catch(() => null);
           if (!icon)
             return null;
@@ -419,7 +440,10 @@ const __nuxt_component_1 = defineComponent({
     const runtimeOptions = useAppConfig().icon;
     const name = useResolvedName(() => props.name);
     const component = computed(
-      () => nuxtApp.vueApp?.component(name.value) || ((props.mode || runtimeOptions.mode) === "svg" ? NuxtIconSvg : NuxtIconCss)
+      () => {
+        var _a;
+        return ((_a = nuxtApp.vueApp) == null ? void 0 : _a.component(name.value)) || ((props.mode || runtimeOptions.mode) === "svg" ? NuxtIconSvg : NuxtIconCss);
+      }
     );
     const style = computed(() => {
       const size = props.size || runtimeOptions.size;
@@ -438,6 +462,10 @@ const __nuxt_component_1 = defineComponent({
     );
   }
 });
+const index = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: __nuxt_component_1
+}, Symbol.toStringTag, { value: "Module" }));
 
-export { __nuxt_component_1 as default };
-//# sourceMappingURL=index-BQXvL9HD.mjs.map
+export { __nuxt_component_1 as _, index as i, useAsyncData as u };
+//# sourceMappingURL=index-D86bI_Ad.mjs.map
