@@ -43,8 +43,7 @@ function useFetch(request, arg1, arg2) {
   };
   let controller;
   const asyncData = useAsyncData(watchSources === false ? key.value : key, () => {
-    var _a;
-    (_a = controller == null ? void 0 : controller.abort) == null ? void 0 : _a.call(controller, new DOMException("Request aborted as another request to the same endpoint was initiated.", "AbortError"));
+    controller?.abort?.(new DOMException("Request aborted as another request to the same endpoint was initiated.", "AbortError"));
     controller = typeof AbortController !== "undefined" ? new AbortController() : {};
     const timeoutLength = toValue(opts.timeout);
     let timeoutId;
@@ -66,9 +65,8 @@ function useFetch(request, arg1, arg2) {
   return asyncData;
 }
 function generateOptionSegments(opts) {
-  var _a;
   const segments = [
-    ((_a = toValue(opts.method)) == null ? void 0 : _a.toUpperCase()) || "GET",
+    toValue(opts.method)?.toUpperCase() || "GET",
     toValue(opts.baseURL)
   ];
   for (const _obj of [opts.params || opts.query]) {

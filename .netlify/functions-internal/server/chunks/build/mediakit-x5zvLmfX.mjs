@@ -62,16 +62,14 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
     }, "$tzA6gjwdpV")), __temp = await __temp, __restore(), __temp);
     const account = computed(() => {
       const raw = insightsData.value;
-      return (raw == null ? void 0 : raw.account) || {};
+      return raw?.account || {};
     });
     const metrics = computed(() => {
-      var _a;
       const raw = insightsData.value;
-      const insights = ((_a = raw == null ? void 0 : raw.insights) == null ? void 0 : _a.data) || [];
+      const insights = raw?.insights?.data || [];
       const getMetricValue = (name) => {
-        var _a2, _b;
         const metric = insights.find((m) => m.name === name);
-        return ((_b = (_a2 = metric == null ? void 0 : metric.values) == null ? void 0 : _a2[0]) == null ? void 0 : _b.value) || 0;
+        return metric?.values?.[0]?.value || 0;
       };
       return {
         impressions: getMetricValue("impressions"),
@@ -163,9 +161,8 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
       ]
     }));
     const contentPerformance = computed(() => {
-      var _a;
       const raw = insightsData.value;
-      const media = ((_a = raw == null ? void 0 : raw.media) == null ? void 0 : _a.data) || [];
+      const media = raw?.media?.data || [];
       const totalLikes = media.reduce((sum, m) => sum + (m.like_count || 0), 0);
       const totalComments = media.reduce((sum, m) => sum + (m.comments_count || 0), 0);
       const avgLikes = media.length ? Math.round(totalLikes / media.length) : 0;
@@ -470,7 +467,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         name: "mdi:account",
         class: "w-10 h-10 text-white"
       }, null, _parent));
-      _push(`</div><div class="text-center sm:text-left flex-1"><h2 class="text-2xl font-ghibli font-bold text-ghibli-brown-700"> Daily Jeds </h2><p class="text-ghibli-amber-600 font-lazy">@daily.jeds</p><p class="text-ghibli-brown-400 text-sm mt-1"> Home Growth &amp; Family Lifestyle \u2022 Salatiga, Indonesia </p></div><a${ssrRenderAttr("href", waLink)} target="_blank" rel="noopener noreferrer" class="ghibli-button flex items-center gap-2">`);
+      _push(`</div><div class="text-center sm:text-left flex-1"><h2 class="text-2xl font-ghibli font-bold text-ghibli-brown-700"> Daily Jeds </h2><p class="text-ghibli-amber-600 font-lazy">@daily.jeds</p><p class="text-ghibli-brown-400 text-sm mt-1"> Home Growth &amp; Family Lifestyle • Salatiga, Indonesia </p></div><a${ssrRenderAttr("href", waLink)} target="_blank" rel="noopener noreferrer" class="ghibli-button flex items-center gap-2">`);
       _push(ssrRenderComponent(_component_Icon, {
         name: "mdi:whatsapp",
         class: "w-5 h-5"

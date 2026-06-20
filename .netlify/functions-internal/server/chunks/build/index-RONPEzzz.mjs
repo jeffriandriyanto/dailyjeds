@@ -43,7 +43,7 @@ const _sfc_main$9 = /* @__PURE__ */ defineComponent({
       const _component_Icon = __nuxt_component_1$1;
       _push(`<div${ssrRenderAttrs(mergeProps({ class: "fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3" }, _attrs))}>`);
       if (unref(showTooltip) && !unref(isPlaying)) {
-        _push(`<div class="glass-effect rounded-xl px-4 py-2 shadow-ghibli text-sm text-ghibli-brown-600 max-w-[200px]"><p class="flex items-center gap-2"><span class="text-ghibli-amber-500">\u266A</span><span>Play gentle Ghibli music?</span></p></div>`);
+        _push(`<div class="glass-effect rounded-xl px-4 py-2 shadow-ghibli text-sm text-ghibli-brown-600 max-w-[200px]"><p class="flex items-center gap-2"><span class="text-ghibli-amber-500">♪</span><span>Play gentle Ghibli music?</span></p></div>`);
       } else {
         _push(`<!---->`);
       }
@@ -223,7 +223,6 @@ async function getMeta(ctx, input, options) {
   }
 }
 function resolveImage(ctx, input, options) {
-  var _a, _b;
   if (input && typeof input !== "string") {
     throw new TypeError(`input must be a string (received ${typeof input}: ${JSON.stringify(input)})`);
   }
@@ -256,10 +255,10 @@ function resolveImage(ctx, input, options) {
   const _options = defu(options, preset, defaults);
   _options.modifiers = { ..._options.modifiers };
   const expectedFormat = _options.modifiers.format;
-  if ((_a = _options.modifiers) == null ? void 0 : _a.width) {
+  if (_options.modifiers?.width) {
     _options.modifiers.width = parseSize(_options.modifiers.width);
   }
-  if ((_b = _options.modifiers) == null ? void 0 : _b.height) {
+  if (_options.modifiers?.height) {
     _options.modifiers.height = parseSize(_options.modifiers.height);
   }
   const image = provider.getImage(input, _options, ctx);
@@ -283,11 +282,10 @@ function getPreset(ctx, name) {
   return ctx.options.presets[name];
 }
 function getSizes(ctx, input, opts) {
-  var _a, _b, _c, _d, _e;
-  const width = parseSize((_a = opts.modifiers) == null ? void 0 : _a.width);
-  const height = parseSize((_b = opts.modifiers) == null ? void 0 : _b.height);
+  const width = parseSize(opts.modifiers?.width);
+  const height = parseSize(opts.modifiers?.height);
   const sizes = parseSizes(opts.sizes);
-  const densities = ((_c = opts.densities) == null ? void 0 : _c.trim()) ? parseDensities(opts.densities.trim()) : ctx.options.densities;
+  const densities = opts.densities?.trim() ? parseDensities(opts.densities.trim()) : ctx.options.densities;
   checkDensities(densities);
   const hwRatio = width && height ? height / width : 0;
   const sizeVariants = [];
@@ -319,8 +317,8 @@ function getSizes(ctx, input, opts) {
         variant = {
           size: "",
           screenMaxWidth: 0,
-          _cWidth: (_d = opts.modifiers) == null ? void 0 : _d.width,
-          _cHeight: (_e = opts.modifiers) == null ? void 0 : _e.height
+          _cWidth: opts.modifiers?.width,
+          _cHeight: opts.modifiers?.height
         };
       }
       srcsetVariants.push({
@@ -337,7 +335,7 @@ function getSizes(ctx, input, opts) {
   return {
     sizes: sizesVal,
     srcset: srcsetVal,
-    src: defaultVariant == null ? void 0 : defaultVariant.src
+    src: defaultVariant?.src
   };
 }
 function getSizesVariant(key, size, height, hwRatio, ctx) {
@@ -376,7 +374,6 @@ function getVariantSrc(ctx, input, opts, variant, density) {
   );
 }
 function finaliseSizeVariants(sizeVariants) {
-  var _a;
   sizeVariants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth);
   let previousMedia = null;
   for (let i = sizeVariants.length - 1; i >= 0; i--) {
@@ -387,7 +384,7 @@ function finaliseSizeVariants(sizeVariants) {
     previousMedia = sizeVariant.media;
   }
   for (let i = 0; i < sizeVariants.length; i++) {
-    sizeVariants[i].media = ((_a = sizeVariants[i + 1]) == null ? void 0 : _a.media) || "";
+    sizeVariants[i].media = sizeVariants[i + 1]?.media || "";
   }
 }
 function finaliseSrcsetVariants(srcsetVariants) {
@@ -470,12 +467,11 @@ const imageOptions = {
   }
 };
 const useImage = (event) => {
-  var _a;
   const config = useRuntimeConfig();
   const nuxtApp = useNuxtApp();
   return nuxtApp.$img || nuxtApp._img || (nuxtApp._img = createImage({
     ...imageOptions,
-    event: (_a = nuxtApp.ssrContext) == null ? void 0 : _a.event,
+    event: nuxtApp.ssrContext?.event,
     nuxt: {
       baseURL: config.app.baseURL
     },
@@ -722,7 +718,7 @@ const _sfc_main$7 = /* @__PURE__ */ defineComponent({
         placeholder: "",
         sizes: "sm:100vw md:50vw lg:600px"
       }, null, _parent));
-      _push(`<div class="absolute bottom-6 left-6 right-6 z-20"><div class="glass-effect rounded-2xl p-4"><p class="text-ghibli-brown-700 font-medium text-sm"> &quot;Cerita kecil tentang keseharian, rumah, dan proses tumbuh bersama.&quot; </p><p class="text-ghibli-brown-400 text-xs mt-2"> - The Journey of @daily.jeds </p></div></div></div><div class="absolute -top-6 -right-6 w-24 h-24 bg-ghibli-amber-100 rounded-full flex items-center justify-center shadow-ghibli animate-float" style="${ssrRenderStyle({ "animation-delay": "-2s" })}"><span class="text-3xl">\u{1F33F}</span></div><div class="absolute -bottom-4 -left-4 w-20 h-20 bg-ghibli-green-100 rounded-full flex items-center justify-center shadow-ghibli animate-float" style="${ssrRenderStyle({ "animation-delay": "-4s" })}"><span class="text-2xl">\u{1F3E1}</span></div></div></div></div><div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce"><button class="text-ghibli-brown-400 hover:text-ghibli-amber-500 transition-colors" aria-label="Scroll to content">`);
+      _push(`<div class="absolute bottom-6 left-6 right-6 z-20"><div class="glass-effect rounded-2xl p-4"><p class="text-ghibli-brown-700 font-medium text-sm"> &quot;Cerita kecil tentang keseharian, rumah, dan proses tumbuh bersama.&quot; </p><p class="text-ghibli-brown-400 text-xs mt-2"> - The Journey of @daily.jeds </p></div></div></div><div class="absolute -top-6 -right-6 w-24 h-24 bg-ghibli-amber-100 rounded-full flex items-center justify-center shadow-ghibli animate-float" style="${ssrRenderStyle({ "animation-delay": "-2s" })}"><span class="text-3xl">🌿</span></div><div class="absolute -bottom-4 -left-4 w-20 h-20 bg-ghibli-green-100 rounded-full flex items-center justify-center shadow-ghibli animate-float" style="${ssrRenderStyle({ "animation-delay": "-4s" })}"><span class="text-2xl">🏡</span></div></div></div></div><div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce"><button class="text-ghibli-brown-400 hover:text-ghibli-amber-500 transition-colors" aria-label="Scroll to content">`);
       _push(ssrRenderComponent(_component_Icon, {
         name: "mdi:chevron-double-down",
         class: "w-8 h-8"
@@ -745,23 +741,23 @@ const _sfc_main$6 = /* @__PURE__ */ defineComponent({
     const storyBlocks = [
       {
         id: "origin",
-        icon: "\u{1F495}",
+        icon: "💕",
         title: "Awal Mula",
         content: "Daily Jeds tumbuh dari perjalanan dua orang yang sudah melewati fase begadang, drama pagi karena sepatu hilang, sampai proyek rumah yang tak pernah selesai tepat waktu. Sekarang kami hidup bersama seorang anak umur enam tahun yang pertanyaannya makin sulit dijawab, tapi justru bikin rumah makin penuh cerita.",
         accent: "bg-ghibli-green-100 border-ghibli-green-300"
       },
       {
         id: "content",
-        icon: "\u{1F3E1}",
+        icon: "🏡",
         title: "Yang Kami Bagi",
         content: "Yang kami bagi di sini sederhana: potongan kehidupan keluarga yang nyata. Rumah yang pelan-pelan dibangun, hubungan yang terus diperbaiki, dan rutinitas yang berubah mengikuti anak yang makin besar dan makin banyak ide.",
         accent: "bg-ghibli-amber-100 border-ghibli-amber-300"
       },
       {
         id: "collab",
-        icon: "\u{1F91D}",
+        icon: "🤝",
         title: "Kolaborasi",
-        content: "Jika kamu datang sebagai brand, kolaborasi bagi kami bukan soal menempelkan produk. Kami memasukkannya ke momen yang memang terjadi\u2014 hangat, jujur, dan relevan dengan perjalanan keluarga kami.",
+        content: "Jika kamu datang sebagai brand, kolaborasi bagi kami bukan soal menempelkan produk. Kami memasukkannya ke momen yang memang terjadi— hangat, jujur, dan relevan dengan perjalanan keluarga kami.",
         accent: "bg-ghibli-wood-100 border-ghibli-wood-300"
       }
     ];
@@ -819,25 +815,25 @@ const _sfc_main$5 = /* @__PURE__ */ defineComponent({
         year: "2018",
         title: "Where It All Began",
         description: "Two hearts and a dream of building something beautiful together. The journey of @daily.jeds started with simple moments.",
-        icon: "\u{1F495}"
+        icon: "💕"
       },
       {
         year: "2019",
         title: "Our Little Miracle",
         description: "Welcoming our first child changed everything. Sleepless nights became the new normal, but so did a love we never knew was possible.",
-        icon: "\u{1F476}"
+        icon: "👶"
       },
       {
         year: "2022",
         title: "Building Our Nest",
         description: "We took the leap and started building our dream home. Every brick, every wall choice became a story worth sharing with our growing community.",
-        icon: "\u{1F3E0}"
+        icon: "🏠"
       },
       {
         year: "2024",
         title: "Growing Together",
         description: "Our family grew, our home took shape, and our community blossomed. We learned that the best stories are the ones lived authentically.",
-        icon: "\u{1F331}"
+        icon: "🌱"
       }
     ];
     const activeIndex = ref(0);
@@ -992,7 +988,7 @@ const _sfc_main$4 = /* @__PURE__ */ defineComponent({
         name: "mdi:heart",
         class: "w-8 h-8 text-white"
       }, null, _parent));
-      _push(`</div></div><div class="text-center md:text-left"><h3 class="text-lg font-ghibli font-semibold text-ghibli-brown-700 mb-2"> Komitmen Kami </h3><p class="text-ghibli-brown-500 leading-relaxed text-sm"> &quot;Kolaborasi bagi kami bukan soal menempelkan produk. Kami memasukkannya ke momen yang memang terjadi\u2014hangat, jujur, dan relevan dengan perjalanan keluarga kami.&quot; </p></div></div></div></div></div></section>`);
+      _push(`</div></div><div class="text-center md:text-left"><h3 class="text-lg font-ghibli font-semibold text-ghibli-brown-700 mb-2"> Komitmen Kami </h3><p class="text-ghibli-brown-500 leading-relaxed text-sm"> &quot;Kolaborasi bagi kami bukan soal menempelkan produk. Kami memasukkannya ke momen yang memang terjadi—hangat, jujur, dan relevan dengan perjalanan keluarga kami.&quot; </p></div></div></div></div></div></section>`);
     };
   }
 });
@@ -1012,31 +1008,31 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent({
         id: "siapa",
         question: "Siapa itu Daily Jeds?",
         answer: "Keluarga muda dari Salatiga yang berbagi cerita keseharian, membangun rumah, dan proses tumbuh bersama. Dimulai dari dua orang yang melewati fase begadang, drama pagi, sampai proyek rumah yang tak pernah selesai tepat waktu.",
-        icon: "\u{1F3E1}"
+        icon: "🏡"
       },
       {
         id: "konten",
         question: "Konten apa yang dibagikan?",
-        answer: "Home growth, family lifestyle, DIY, dan estetika rumah. Cerita nyata tanpa settingan\u2014potongan kehidupan keluarga yang autentik dan relevan dengan kebanyakan keluarga muda Indonesia.",
-        icon: "\u{1F4F8}"
+        answer: "Home growth, family lifestyle, DIY, dan estetika rumah. Cerita nyata tanpa settingan—potongan kehidupan keluarga yang autentik dan relevan dengan kebanyakan keluarga muda Indonesia.",
+        icon: "📸"
       },
       {
         id: "kolaborasi",
         question: "Apakah menerima kolaborasi?",
         answer: "Ya! Ada Paid Collaboration seharga Rp 300.000 per Reels (termasuk Tap Link dan Mirroring ke TikTok), dan juga Barter Produk Premium untuk produk yang relevan dengan niche kami (minimal nilai retail Rp 500.000).",
-        icon: "\u{1F91D}"
+        icon: "🤝"
       },
       {
         id: "hubungi",
         question: "Bagaimana cara menghubungi?",
-        answer: "Langsung via WhatsApp dari tombol yang ada di website ini. Kami biasanya merespons dalam 1\xD724 jam. Untuk pertanyaan kolaborasi, sebutkan brand dan kebutuhanmu ya!",
-        icon: "\u{1F4AC}"
+        answer: "Langsung via WhatsApp dari tombol yang ada di website ini. Kami biasanya merespons dalam 1×24 jam. Untuk pertanyaan kolaborasi, sebutkan brand dan kebutuhanmu ya!",
+        icon: "💬"
       },
       {
         id: "follow",
         question: "Di mana bisa follow Daily Jeds?",
         answer: "Kamu bisa temukan kami di Instagram (@daily.jeds), TikTok (@daily.jeds), Facebook (dailyjeds.page), dan Shopee. Follow untuk ikuti keseharian kami!",
-        icon: "\u{1F4F1}"
+        icon: "📱"
       }
     ];
     const activeFaq = ref(null);
@@ -1257,7 +1253,7 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
         name: "mdi:whatsapp",
         class: "w-4 h-4"
       }, null, _parent));
-      _push(`<span>Chat WhatsApp</span></a></div></div></div></div><div class="border-t border-ghibli-wood-200/50"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6"><div class="flex flex-col md:flex-row justify-between items-center gap-4"><p class="text-ghibli-brown-400 text-sm text-center md:text-left"> \xA9 ${ssrInterpolate(unref(currentYear))} Daily Jeds (@daily.jeds) \xB7 Cerita rumah, cerita hidup </p><div class="flex items-center gap-2 text-ghibli-brown-400 text-sm"><span>Made with</span>`);
+      _push(`<span>Chat WhatsApp</span></a></div></div></div></div><div class="border-t border-ghibli-wood-200/50"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6"><div class="flex flex-col md:flex-row justify-between items-center gap-4"><p class="text-ghibli-brown-400 text-sm text-center md:text-left"> © ${ssrInterpolate(unref(currentYear))} Daily Jeds (@daily.jeds) · Cerita rumah, cerita hidup </p><div class="flex items-center gap-2 text-ghibli-brown-400 text-sm"><span>Made with</span>`);
       _push(ssrRenderComponent(_component_Icon, {
         name: "mdi:heart",
         class: "w-4 h-4 text-ghibli-amber-500 animate-pulse"

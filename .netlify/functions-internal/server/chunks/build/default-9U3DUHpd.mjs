@@ -30,11 +30,11 @@ const useSeo = () => {
       lang: "id"
     },
     title: "Jeds Journey (@daily.jeds) | Daily Activity, Home & Living, Review",
-    titleTemplate: "%s \xB7 DailyJeds",
+    titleTemplate: "%s · DailyJeds",
     meta: [
       {
         name: "description",
-        content: "Daily Activity, Home & Living, Review, Tips & Tricks, Healthy Lifestyle, Mom\u2019s Life. \u{1F4CD} Salatiga, Indonesia | Follow @daily.jeds di TikTok & Instagram."
+        content: "Daily Activity, Home & Living, Review, Tips & Tricks, Healthy Lifestyle, Mom’s Life. 📍 Salatiga, Indonesia | Follow @daily.jeds di TikTok & Instagram."
       },
       {
         name: "keywords",
@@ -47,7 +47,7 @@ const useSeo = () => {
       },
       {
         property: "og:description",
-        content: "Ikuti @daily.jeds (Jeds Journey) untuk Daily Activity, Home & Living, Tips, Healthy Lifestyle & Mom\u2019s Life. \u{1F4CD} Salatiga, Indonesia"
+        content: "Ikuti @daily.jeds (Jeds Journey) untuk Daily Activity, Home & Living, Tips, Healthy Lifestyle & Mom’s Life. 📍 Salatiga, Indonesia"
       },
       {
         property: "og:url",
@@ -64,7 +64,7 @@ const useSeo = () => {
       },
       {
         name: "twitter:description",
-        content: "Ikuti @daily.jeds (Jeds Journey) untuk Daily Activity, Home & Living, Tips, Healthy Lifestyle & Mom\u2019s Life."
+        content: "Ikuti @daily.jeds (Jeds Journey) untuk Daily Activity, Home & Living, Tips, Healthy Lifestyle & Mom’s Life."
       },
       {
         name: "twitter:image",
@@ -81,7 +81,7 @@ const useSeo = () => {
   useSchemaOrg([
     defineWebPage({
       name: "Jeds Journey (@daily.jeds) | Daily Activity, Home & Living, Review",
-      description: "Daily Activity, Home & Living, Review, Tips & Tricks, Healthy Lifestyle, Mom\u2019s Life. \u{1F4CD} Salatiga, Indonesia | Follow @daily.jeds di TikTok & Instagram."
+      description: "Daily Activity, Home & Living, Review, Tips & Tricks, Healthy Lifestyle, Mom’s Life. 📍 Salatiga, Indonesia | Follow @daily.jeds di TikTok & Instagram."
     }),
     definePerson({
       name: "Jeds Journey",

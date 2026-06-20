@@ -4274,7 +4274,7 @@ function _expandFromEnv(value) {
 const _inlineRuntimeConfig = {
   "app": {
     "baseURL": "/",
-    "buildId": "69cb7128-e36e-4cad-9eb7-f4b2e0637e0d",
+    "buildId": "1bedf1e7-de6a-4104-9bce-f2ffbbd54d39",
     "buildAssetsDir": "/_nuxt/",
     "cdnURL": ""
   },
@@ -4367,7 +4367,7 @@ const _inlineRuntimeConfig = {
         "sitemapName": "sitemap.xml",
         "route": "sitemap.xml",
         "defaults": {
-          "lastmod": "2026-06-20T13:58:15Z"
+          "lastmod": "2026-06-20T14:03:49Z"
         },
         "include": [],
         "exclude": [
