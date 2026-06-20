@@ -70,14 +70,16 @@ const metrics = computed(() => {
   
   const getMetricValue = (name: string) => {
     const metric = insights.find((m: any) => m.name === name)
-    return metric?.values?.[0]?.value || 0
+    if (!metric) return 0
+    // Handle both formats: values[0].value (old) and total_value.value (new)
+    return metric?.values?.[0]?.value || metric?.total_value?.value || 0
   }
 
   return {
     impressions: getMetricValue('impressions'),
     reach: getMetricValue('reach'),
     profileViews: getMetricValue('profile_views'),
-    followers: account.value.followers_count || 8500,
+    followers: account.value.followers_count || 8000,
   }
 })
 
