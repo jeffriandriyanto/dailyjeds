@@ -9,8 +9,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const accountData = await fetchAccountData(INSTAGRAM_ACCOUNT_ID, ACCESS_TOKEN)
-    
+    const accountData: any = await fetchAccountData(INSTAGRAM_ACCOUNT_ID, ACCESS_TOKEN)
     let insightsData = null
     try {
       insightsData = await fetchInsights(INSTAGRAM_ACCOUNT_ID, ACCESS_TOKEN)
