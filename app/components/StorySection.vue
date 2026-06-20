@@ -118,26 +118,26 @@ onMounted(() => {
         </p>
       </div>
 
-      <div class="grid sm:grid-cols-3 gap-6 mb-16 max-w-lg">
+      <div class="grid grid-cols-3 gap-4 sm:gap-6 mb-16 max-w-2xl mx-auto">
         <div
           v-for="stat in stats"
           :key="stat.label"
-          class="ghibli-card p-6 text-center group hover:scale-105 transition-all duration-300"
+          class="ghibli-card p-4 sm:p-6 text-center group hover:scale-105 transition-all duration-300"
           data-aos="fade-up"
           data-aos-delay="100"
         >
           <div
-            class="w-12 h-12 mx-auto mb-3 rounded-full bg-ghibli-green-100 flex items-center justify-center group-hover:bg-ghibli-amber-100 transition-colors"
+            class="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-3 rounded-full bg-ghibli-green-100 flex items-center justify-center group-hover:bg-ghibli-amber-100 transition-colors"
           >
             <Icon
               :name="stat.icon"
-              class="w-6 h-6 text-ghibli-green-600 group-hover:text-ghibli-amber-600 transition-colors"
+              class="w-5 h-5 sm:w-6 sm:h-6 text-ghibli-green-600 group-hover:text-ghibli-amber-600 transition-colors"
             />
           </div>
-          <p class="text-3xl font-bold text-ghibli-brown-700 font-ghibli">
+          <p class="text-2xl sm:text-3xl font-bold text-ghibli-brown-700 font-ghibli">
             {{ stat.value }}
           </p>
-          <p class="text-sm text-ghibli-brown-400 mt-1">{{ stat.label }}</p>
+          <p class="text-xs sm:text-sm text-ghibli-brown-400 mt-1">{{ stat.label }}</p>
         </div>
       </div>
 

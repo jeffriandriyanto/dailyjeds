@@ -13,6 +13,15 @@ export default defineNuxtConfig({
 
   css: ["~/assets/css/main.css", "@/assets/css/fonts.css"],
 
+  image: {
+    domains: [
+      "scontent.cdninstagram.com",
+      "scontent-cgk1-1.cdninstagram.com",
+      "scontent-lax3-1.cdninstagram.com",
+      "platform-lookaside.fbsbx.com",
+    ],
+  },
+
   aos: {
     duration: 800,
     easing: "ease-out-cubic",
