@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { trackCta } = useAnalytics()
+const { formattedFollowers } = useInstagramData()
 
 interface FaqItem {
   id: string
@@ -8,38 +9,38 @@ interface FaqItem {
   icon: string
 }
 
-const faqItems: FaqItem[] = [
+const faqItems = computed<FaqItem[]>(() => [
   {
     id: 'siapa',
-    question: 'Siapa itu Daily Jeds?',
-    answer: 'Keluarga muda dari Salatiga yang berbagi cerita keseharian, membangun rumah, dan proses tumbuh bersama. Dimulai dari dua orang yang melewati fase begadang, drama pagi, sampai proyek rumah yang tak pernah selesai tepat waktu.',
+    question: 'Siapa itu Daily Jeds & seperti apa audiensnya?',
+    answer: `Daily Jeds (@daily.jeds) adalah content creator berbasis di Salatiga yang berfokus pada Home Living, Cozy Growth, & Parenting Lifestyle. Komunitas kami mencapai ${formattedFollowers.value} followers yang aktif mencari inspirasi penataan rumah bernuansa hangat, rutinitas keluarga muda, dan rekomendasi produk berkualitas.`,
     icon: '🏡',
   },
   {
     id: 'konten',
-    question: 'Konten apa yang dibagikan?',
-    answer: 'Home growth, family lifestyle, DIY, dan estetika rumah. Cerita nyata tanpa settingan—potongan kehidupan keluarga yang autentik dan relevan dengan kebanyakan keluarga muda Indonesia.',
+    question: 'Konten apa saja yang diproduksi?',
+    answer: 'Reels vertikal 9:16 high-definition tentang penataan rumah estetik sederhana, rutinitas keluarga muda, DIY praktis, dan honest review produk harian. Konten dibawakan dengan tone hangat dan storytelling natural tanpa kesan iklan kaku.',
     icon: '📸',
   },
   {
     id: 'kolaborasi',
-    question: 'Apakah menerima kolaborasi?',
-    answer: 'Ya! Ada Paid Collaboration seharga Rp 300.000 per Reels (termasuk Tap Link dan Mirroring ke TikTok), dan juga Barter Produk Premium untuk produk yang relevan dengan niche kami (minimal nilai retail Rp 500.000).',
+    question: 'Berapa rate card dan paket kolaborasi yang tersedia?',
+    answer: 'Paid Collaboration Reels seharga Rp 350.000 per video (sudah termasuk placement Tap Link di Bio & Story 24 jam, free mirroring ke TikTok @daily.jeds, serta laporan insight performa H+3). Kami juga menerima TOM Barter Collaboration untuk produk terpilih kategori home & kids dengan nilai retail minimal Rp 500.000.',
     icon: '🤝',
   },
   {
-    id: 'hubungi',
-    question: 'Bagaimana cara menghubungi?',
-    answer: 'Langsung via WhatsApp dari tombol yang ada di website ini. Kami biasanya merespons dalam 1×24 jam. Untuk pertanyaan kolaborasi, sebutkan brand dan kebutuhanmu ya!',
-    icon: '💬',
+    id: 'alur',
+    question: 'Bagaimana alur kerja kolaborasinya?',
+    answer: 'Sangat praktis: 1) Kontak kami via WhatsApp untuk booking slot & kirim brief produk -> 2) Pengiriman produk -> 3) Penyusunan naskah/outline konsep -> 4) Pengambilan video & editing -> 5) Preview ke brand & revisi minor -> 6) Tayang di Instagram & TikTok -> 7) Pengiriman laporan insight H+3.',
+    icon: '📋',
   },
   {
-    id: 'follow',
-    question: 'Di mana bisa follow Daily Jeds?',
-    answer: 'Kamu bisa temukan kami di Instagram (@daily.jeds), TikTok (@daily.jeds), Facebook (dailyjeds.page), dan Shopee. Follow untuk ikuti keseharian kami!',
-    icon: '📱',
+    id: 'hubungi',
+    question: 'Bagaimana cara cepat booking slot kolaborasi?',
+    answer: 'Langsung klik tombol WhatsApp di website ini. Kami merespons cepat dalam 1×24 jam. Sebutkan nama brand dan rencana jadwal postingan yang diinginkan ya!',
+    icon: '💬',
   },
-]
+])
 
 const activeFaq = ref<string | null>(null)
 

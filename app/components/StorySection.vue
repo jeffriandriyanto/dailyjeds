@@ -1,133 +1,95 @@
 <script setup lang="ts">
-const { trackCta } = useAnalytics();
+const { trackCta, trackWaClick } = useAnalytics()
+const { formattedFollowers, mediaCount } = useInstagramData()
 
-interface StoryBlock {
-  id: string;
-  icon: string;
-  title: string;
-  content: string;
-  accent: string;
+const WHATSAPP_NUMBER = '6285179857522'
+const WA_MESSAGE = 'Halo Kak! Saya ingin mendiskusikan kolaborasi konten di @daily.jeds. Boleh minta rate card dan info jadwalnya?'
+const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WA_MESSAGE)}`
+
+interface StandardBlock {
+  id: string
+  icon: string
+  title: string
+  highlight: string
+  content: string
+  accent: string
 }
 
-const storyBlocks: StoryBlock[] = [
+const standardBlocks: StandardBlock[] = [
   {
-    id: "origin",
-    icon: "💕",
-    title: "Awal Mula",
-    content:
-      "Daily Jeds tumbuh dari perjalanan dua orang yang sudah melewati fase begadang, drama pagi karena sepatu hilang, sampai proyek rumah yang tak pernah selesai tepat waktu. Sekarang kami hidup bersama seorang anak umur enam tahun yang pertanyaannya makin sulit dijawab, tapi justru bikin rumah makin penuh cerita.",
-    accent: "bg-ghibli-green-100 border-ghibli-green-300",
+    id: 'authenticity',
+    icon: '✨',
+    title: 'Storytelling yang Dipercaya',
+    highlight: 'Bukan sekadar membaca skrip iklan',
+    content: 'Kami menyematkan produk ke dalam aktivitas harian yang memang terjadi—saat beberes rumah, bermain bersama anak, atau memasak di dapur. Kejujuran ini yang membuat audiens terdorong mencoba rekomendasi kami.',
+    accent: 'bg-emerald-50/80 border-emerald-200/80',
   },
   {
-    id: "content",
-    icon: "🏡",
-    title: "Yang Kami Bagi",
-    content:
-      "Yang kami bagi di sini sederhana: potongan kehidupan keluarga yang nyata. Rumah yang pelan-pelan dibangun, hubungan yang terus diperbaiki, dan rutinitas yang berubah mengikuti anak yang makin besar dan makin banyak ide.",
-    accent: "bg-ghibli-amber-100 border-ghibli-amber-300",
+    id: 'visual-quality',
+    icon: '🎥',
+    title: 'Estetika Visual Warm & Cozy',
+    highlight: 'Tone warna hangat khas hunian nyaman',
+    content: 'Konten direkam dengan format vertikal 9:16 berkualitas tinggi, pencahayaan alami, audio jernih, dan grading warna hangat yang membuat penonton betah menonton Reels sampai selesai (high retention rate).',
+    accent: 'bg-amber-50/80 border-amber-200/80',
   },
   {
-    id: "collab",
-    icon: "🤝",
-    title: "Kolaborasi",
-    content:
-      "Jika kamu datang sebagai brand, kolaborasi bagi kami bukan soal menempelkan produk. Kami memasukkannya ke momen yang memang terjadi— hangat, jujur, dan relevan dengan perjalanan keluarga kami.",
-    accent: "bg-ghibli-wood-100 border-ghibli-wood-300",
+    id: 'professionalism',
+    icon: '🤝',
+    title: 'Proses Kerja Cepat & Transparan',
+    highlight: 'Komunikasi responsif & 100% on-time',
+    content: 'Penyusunan outline ide yang terarah, konsultasi angle pesan sebelum shooting, kesempatan revisi naskah, serta pengiriman insight performa postingan secara transparan untuk laporan campaign Anda.',
+    accent: 'bg-stone-50 border-stone-200/80',
   },
-];
+]
 
-const activeBlock = ref<string | null>(null);
-const isVisible = ref(false);
-const typedText = ref("");
-const fullText = "Welcome to Our Home";
+const activeBlock = ref<string | null>('authenticity')
 
-const stats = [
-  { label: "Tahun Bersama", value: "17+", icon: "mdi:heart" },
-  { label: "Followers", value: "8K+", icon: "mdi:account-group" },
-  { label: "Kolaborasi Brand", value: "30+", icon: "mdi:handshake" },
-];
+const stats = computed(() => [
+  { label: 'Followers Aktif', value: formattedFollowers.value, icon: 'mdi:account-group' },
+  { label: 'Konten Reels/Posts', value: mediaCount.value ? `${mediaCount.value}+` : '350+', icon: 'mdi:video-vintage' },
+  { label: 'On-Time Delivery', value: '100%', icon: 'mdi:clock-check-outline' },
+])
 
 const toggleBlock = (id: string) => {
-  activeBlock.value = activeBlock.value === id ? null : id;
-  trackCta("story_expand", id);
-};
-
-const typeWriter = () => {
-  let i = 0;
-  const interval = setInterval(() => {
-    if (i < fullText.length) {
-      typedText.value += fullText.charAt(i);
-      i++;
-    } else {
-      clearInterval(interval);
-    }
-  }, 80);
-};
-
-onMounted(() => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          isVisible.value = true;
-          typeWriter();
-          observer.disconnect();
-        }
-      });
-    },
-    { threshold: 0.2 },
-  );
-
-  const section = document.getElementById("story");
-  if (section) observer.observe(section);
-});
+  activeBlock.value = activeBlock.value === id ? null : id
+  trackCta('story_expand', id)
+}
 </script>
 
 <template>
   <section
     id="story"
-    class="relative py-24 lg:py-32 overflow-hidden ghibli-section"
+    class="relative py-20 lg:py-28 overflow-hidden ghibli-section"
   >
     <div
       class="absolute inset-0 bg-gradient-to-b from-ghibli-cream via-ghibli-cream-light to-ghibli-cream-warm"
     />
 
-    <div
-      class="absolute top-10 right-10 w-40 h-40 bg-ghibli-green-200 rounded-full mix-blend-multiply filter blur-2xl opacity-20 animate-float"
-    />
-    <div
-      class="absolute bottom-20 left-10 w-56 h-56 bg-ghibli-amber-200 rounded-full mix-blend-multiply filter blur-2xl opacity-20 animate-float"
-      style="animation-delay: -3s"
-    />
-
     <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16" data-aos="fade-up">
-        <p
-          class="text-ghibli-green-600 font-medium tracking-wider uppercase text-sm mb-4"
-        >
-          Our Philosophy
+      <!-- Section Header -->
+      <div class="text-center mb-14" data-aos="fade-up">
+        <p class="text-ghibli-green-600 font-semibold tracking-wider uppercase text-xs sm:text-sm mb-3">
+          The Creator Standard
         </p>
-        <h2
-          class="text-4xl sm:text-5xl font-ghibli font-bold mb-6 min-h-[60px]"
-        >
-          <span class="ghibli-text-gradient">{{ typedText }}</span>
-          <span class="animate-pulse text-ghibli-amber-500">|</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-ghibli font-bold mb-4">
+          <span class="ghibli-text-gradient">Standar Kualitas Konten Daily Jeds</span>
         </h2>
-        <p class="text-ghibli-brown-400 max-w-lg mx-auto">
-          Klik setiap kartu untuk membaca cerita lengkapnya
+        <p class="text-ghibli-brown-500 max-w-xl mx-auto text-sm sm:text-base">
+          Tiga komitmen utama kami saat bermitra dengan setiap brand partner.
         </p>
       </div>
 
-      <div class="grid grid-cols-3 gap-4 sm:gap-6 mb-16 max-w-2xl mx-auto">
+      <!-- Stats Bar -->
+      <div class="grid grid-cols-3 gap-3 sm:gap-6 mb-14 max-w-2xl mx-auto">
         <div
           v-for="stat in stats"
           :key="stat.label"
-          class="ghibli-card p-4 sm:p-6 text-center group hover:scale-105 transition-all duration-300"
+          class="ghibli-card p-4 sm:p-6 text-center group hover:scale-105 transition-all duration-300 shadow-sm"
           data-aos="fade-up"
           data-aos-delay="100"
         >
           <div
-            class="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-3 rounded-full bg-ghibli-green-100 flex items-center justify-center group-hover:bg-ghibli-amber-100 transition-colors"
+            class="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-3 rounded-xl bg-ghibli-green-100 flex items-center justify-center group-hover:bg-ghibli-amber-100 transition-colors"
           >
             <Icon
               :name="stat.icon"
@@ -137,100 +99,77 @@ onMounted(() => {
           <p class="text-2xl sm:text-3xl font-bold text-ghibli-brown-700 font-ghibli">
             {{ stat.value }}
           </p>
-          <p class="text-xs sm:text-sm text-ghibli-brown-400 mt-1">{{ stat.label }}</p>
+          <p class="text-[11px] sm:text-xs text-ghibli-brown-400 mt-1 font-medium">{{ stat.label }}</p>
         </div>
       </div>
 
-      <div class="space-y-4">
+      <!-- Feature Interactive Cards -->
+      <div class="space-y-4 max-w-3xl mx-auto">
         <div
-          v-for="(block, index) in storyBlocks"
+          v-for="(block, index) in standardBlocks"
           :key="block.id"
           class="relative"
-          :data-aos="index % 2 === 0 ? 'fade-right' : 'fade-left'"
-          :data-aos-delay="200 + index * 100"
+          data-aos="fade-up"
+          :data-aos-delay="150 + index * 100"
         >
           <div
-            class="ghibli-card cursor-pointer transition-all duration-500 overflow-hidden"
+            class="ghibli-card cursor-pointer transition-all duration-300 overflow-hidden border"
             :class="[
               block.accent,
               activeBlock === block.id
-                ? 'shadow-ghibli-hover'
-                : 'shadow-ghibli',
+                ? 'shadow-ghibli-hover ring-2 ring-ghibli-green-400/40'
+                : 'shadow-sm',
             ]"
             @click="toggleBlock(block.id)"
           >
-            <div class="p-6 flex items-start gap-4">
-              <span
-                class="text-3xl flex-shrink-0 transition-transform duration-300"
-                :class="{ 'scale-125': activeBlock === block.id }"
-              >
+            <div class="p-5 sm:p-6 flex items-start gap-4">
+              <span class="text-2xl sm:text-3xl flex-shrink-0">
                 {{ block.icon }}
               </span>
 
-              <div class="flex-1">
-                <div class="flex items-center justify-between">
-                  <h3
-                    class="text-xl font-ghibli font-semibold text-ghibli-brown-700"
-                  >
-                    {{ block.title }}
-                  </h3>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between gap-2">
+                  <div>
+                    <h3 class="text-lg sm:text-xl font-ghibli font-bold text-ghibli-brown-700">
+                      {{ block.title }}
+                    </h3>
+                    <p class="text-xs sm:text-sm text-ghibli-green-700 font-medium mt-0.5">
+                      {{ block.highlight }}
+                    </p>
+                  </div>
                   <Icon
                     name="mdi:chevron-down"
-                    class="w-5 h-5 text-ghibli-brown-400 transition-transform duration-300"
+                    class="w-5 h-5 text-ghibli-brown-400 transition-transform duration-300 flex-shrink-0"
                     :class="{ 'rotate-180': activeBlock === block.id }"
                   />
                 </div>
 
-                <Transition
-                  enter-active-class="transition-all duration-500 ease-out"
-                  enter-from-class="opacity-0 max-h-0"
-                  enter-to-class="opacity-100 max-h-96"
-                  leave-active-class="transition-all duration-300 ease-in"
-                  leave-from-class="opacity-100 max-h-96"
-                  leave-to-class="opacity-0 max-h-0"
+                <div
+                  v-show="activeBlock === block.id"
+                  class="pt-3.5 mt-3.5 border-t border-ghibli-wood-200/40"
                 >
-                  <div
-                    v-show="activeBlock === block.id"
-                    class="overflow-hidden"
-                  >
-                    <p
-                      class="text-ghibli-brown-600 leading-relaxed mt-4 pt-4 border-t border-ghibli-wood-200/50"
-                    >
-                      {{ block.content }}
-                    </p>
-                  </div>
-                </Transition>
+                  <p class="text-xs sm:text-sm text-ghibli-brown-600 leading-relaxed">
+                    {{ block.content }}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="mt-16 text-center" data-aos="fade-up" data-aos-delay="600">
-        <div class="inline-block ghibli-card p-8 relative overflow-hidden">
-          <div
-            class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-ghibli-green-400 via-ghibli-amber-400 to-ghibli-wood-400"
-          />
-          <div
-            class="absolute -top-2 -right-2 w-16 h-16 bg-ghibli-amber-100 rounded-full opacity-50"
-          />
-
-          <p
-            class="text-xl text-ghibli-brown-500 italic font-ghibli relative z-10"
-          >
-            "Selamat datang di rumah digital kami.<br />
-            <span class="text-ghibli-brown-700 font-semibold"
-              >Tidak selalu rapi, tapi selalu punya cerita.</span
-            >"
-          </p>
-          <div class="mt-4 flex items-center justify-center gap-3">
-            <div class="w-8 h-px bg-ghibli-amber-300" />
-            <span class="text-ghibli-amber-500 font-lazy text-sm"
-              >@daily.jeds</span
-            >
-            <div class="w-8 h-px bg-ghibli-amber-300" />
-          </div>
-        </div>
+      <!-- Bottom Direct Collaboration Prompt -->
+      <div class="mt-12 text-center" data-aos="fade-up" data-aos-delay="400">
+        <a
+          :href="waLink"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 text-sm font-semibold text-ghibli-green-700 hover:text-ghibli-green-800 transition-colors py-2 px-4 rounded-xl bg-ghibli-green-50 border border-ghibli-green-200"
+          @click="trackWaClick('story_inquiry_cta')"
+        >
+          <Icon name="mdi:chat-processing-outline" class="w-4 h-4" />
+          <span>Ingin custom campaign atau paket khusus? Chat langsung di WhatsApp &rarr;</span>
+        </a>
       </div>
     </div>
   </section>

@@ -1,18 +1,18 @@
 <script setup lang="ts">
 useHead({
-  title: 'Daily Jeds - Home Growth & Family Lifestyle',
+  title: 'Daily Jeds (@daily.jeds) - Home Growth, Cozy Living & Family Lifestyle Creator',
   meta: [
     {
       name: 'description',
-      content: 'Prioritizing audience trust and authentic storytelling over aggressive branding. A journey of home growth, family moments, and the beautiful chaos of everyday life.',
+      content: 'Official Creator Landing Page @daily.jeds. Menghubungkan brand dengan audiens keluarga muda melalui konten Reels berkualitas, warm aesthetic, dan storytelling otentik.',
     },
     {
       property: 'og:title',
-      content: 'Daily Jeds - Home Growth & Family Lifestyle',
+      content: 'Daily Jeds (@daily.jeds) - Home Growth & Family Lifestyle Creator',
     },
     {
       property: 'og:description',
-      content: 'Cerita keluarga muda yang sedang membangun rumah, membangun ritme hidup, dan membangun satu sama lain.',
+      content: 'Rate card kolaborasi Reels mulai Rp 350.000. Jangkau ribuan ibu muda dan keluarga dengan konten terpercaya.',
     },
     {
       property: 'og:type',
@@ -28,7 +28,7 @@ useHead({
     },
     {
       name: 'keywords',
-      content: 'daily jeds, family lifestyle, home growth, mom life, cottagecore, authentic storytelling',
+      content: 'daily jeds, content creator salatiga, home decor indonesia, parenting reels, kolaborasi brand, rate card influencer, micro influencer indonesia',
     },
   ],
   link: [
@@ -48,7 +48,7 @@ useSchemaOrg([
   defineOrganization({
     name: 'Daily Jeds',
     url: 'https://dailyjeds.netlify.app',
-    logo: '/favicon.ico',
+    logo: '/profile.jpg',
     sameAs: [
       'https://www.instagram.com/daily.jeds',
       'https://www.tiktok.com/@daily.jeds',
@@ -70,13 +70,13 @@ const scrollToTop = () => {
       <HeroSection
         title="Daily Jeds"
         subtitle="@daily.jeds"
-        description="Prioritizing audience trust and authentic storytelling over aggressive branding. A journey of home growth, family moments, and the beautiful chaos of everyday life."
+        description="Home Growth, Cozy Living, &amp; Parenting Lifestyle Creator berbasis di Salatiga. Membangun kedekatan otentik dengan audiens keluarga muda melalui konten Reels berestetika hangat."
         hero-image="/hero-family.jpeg"
       />
 
-      <StorySection />
+      <BrandPillarsSection />
 
-      <JourneyTimeline />
+      <StorySection />
 
       <ServicesGrid />
 
@@ -87,15 +87,19 @@ const scrollToTop = () => {
 
     <FooterSection />
 
-    <div class="fixed bottom-24 right-6 z-40">
+    <!-- Sticky Floating Action Bar for Brands -->
+    <FloatingCollabBar />
+
+    <!-- Back to top button -->
+    <div class="fixed bottom-24 right-5 z-40">
       <button
-        class="w-12 h-12 rounded-full bg-ghibli-green-500 text-white shadow-ghibli hover:shadow-ghibli-hover hover:bg-ghibli-green-600 transition-all duration-300 flex items-center justify-center group"
+        class="w-11 h-11 rounded-full bg-ghibli-green-500/90 text-white shadow-md hover:shadow-lg hover:bg-ghibli-green-600 transition-all duration-300 flex items-center justify-center group backdrop-blur-xs"
         aria-label="Back to top"
         @click="scrollToTop"
       >
         <Icon 
           name="mdi:arrow-up" 
-          class="w-6 h-6 transition-transform group-hover:-translate-y-1" 
+          class="w-5 h-5 transition-transform group-hover:-translate-y-0.5" 
         />
       </button>
     </div>
