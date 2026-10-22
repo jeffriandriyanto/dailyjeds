@@ -125,7 +125,6 @@ const scrollToSection = (link: string) => {
               class="w-full h-[440px] sm:h-[500px] object-cover"
               loading="eager"
               fetchpriority="high"
-              preload
               sizes="sm:100vw md:50vw lg:500px"
             />
 

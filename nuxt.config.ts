@@ -72,6 +72,13 @@ export default defineNuxtConfig({
     preset: "netlify",
   },
 
+  prerender: {
+    // Abaikan Netlify Image CDN saat prerender: endpoint /.netlify/images
+    // hanya ada saat runtime, bukan saat build. Tanpa ini, crawler generate
+    // gagal dengan 404 dan menggagalkan seluruh deploy.
+    ignore: ["/.netlify/images"],
+  },
+
   runtimeConfig: {
     instagramAccountId: process.env.NUXT_INSTAGRAM_ACCOUNT_ID || '',
     instagramToken: process.env.NUXT_META_ACCESS_TOKEN || '',

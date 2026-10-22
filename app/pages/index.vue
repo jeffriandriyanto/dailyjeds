@@ -71,7 +71,7 @@ const scrollToTop = () => {
         title="Daily Jeds"
         subtitle="@daily.jeds"
         description="Home Growth, Cozy Living, &amp; Parenting Lifestyle Creator berbasis di Salatiga. Membangun kedekatan otentik dengan audiens keluarga muda melalui konten Reels berestetika hangat."
-        hero-image="/hero-family.jpeg"
+        hero-image="/hero-family.webp"
       />
 
       <BrandPillarsSection />
