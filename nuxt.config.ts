@@ -80,8 +80,13 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    instagramAccountId: process.env.NUXT_INSTAGRAM_ACCOUNT_ID || '',
-    instagramToken: process.env.NUXT_META_ACCESS_TOKEN || '',
+    // JANGAN baca process.env di sini: nilainya akan di-inline ke bundle
+    // saat build dan bocor ke hasil build (gagal Netlify Secrets Scanning).
+    // Nilai diisi saat runtime otomatis dari env:
+    //   NUXT_INSTAGRAM_ACCOUNT_ID -> instagramAccountId
+    //   NUXT_META_ACCESS_TOKEN    -> metaAccessToken
+    instagramAccountId: '',
+    metaAccessToken: '',
     public: {
       siteUrl: "https://dailyjeds.netlify.app",
     },

@@ -2,7 +2,7 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
   
   const INSTAGRAM_ACCOUNT_ID = config.instagramAccountId
-  const ACCESS_TOKEN = config.instagramToken
+  const ACCESS_TOKEN = config.metaAccessToken
   
   if (!INSTAGRAM_ACCOUNT_ID || !ACCESS_TOKEN) {
     return getBaselineData()
@@ -74,7 +74,7 @@ function getBaselineData() {
       username: 'daily.jeds',
       followers_count: 11100,
       media_count: 142,
-      profile_picture_url: '/profile.jpg',
+      profile_picture_url: '/profile.webp',
     },
     insights: {
       data: [
@@ -93,7 +93,7 @@ function getBaselineData() {
           comments_count: 118,
           timestamp: new Date(now - 3 * 24 * 3600 * 1000).toISOString(),
           permalink: 'https://www.instagram.com/daily.jeds',
-          thumbnail_url: '/hero-family.jpeg',
+          thumbnail_url: '/hero-family.webp',
         },
         {
           id: 'post_2',
@@ -103,7 +103,7 @@ function getBaselineData() {
           comments_count: 84,
           timestamp: new Date(now - 7 * 24 * 3600 * 1000).toISOString(),
           permalink: 'https://www.instagram.com/daily.jeds',
-          thumbnail_url: '/hero-family.jpeg',
+          thumbnail_url: '/hero-family.webp',
         },
         {
           id: 'post_3',
@@ -113,7 +113,7 @@ function getBaselineData() {
           comments_count: 142,
           timestamp: new Date(now - 12 * 24 * 3600 * 1000).toISOString(),
           permalink: 'https://www.instagram.com/daily.jeds',
-          thumbnail_url: '/hero-family.jpeg',
+          thumbnail_url: '/hero-family.webp',
         },
         {
           id: 'post_4',
@@ -123,7 +123,7 @@ function getBaselineData() {
           comments_count: 96,
           timestamp: new Date(now - 18 * 24 * 3600 * 1000).toISOString(),
           permalink: 'https://www.instagram.com/daily.jeds',
-          thumbnail_url: '/hero-family.jpeg',
+          thumbnail_url: '/hero-family.webp',
         },
         {
           id: 'post_5',
@@ -133,7 +133,7 @@ function getBaselineData() {
           comments_count: 62,
           timestamp: new Date(now - 24 * 24 * 3600 * 1000).toISOString(),
           permalink: 'https://www.instagram.com/daily.jeds',
-          thumbnail_url: '/hero-family.jpeg',
+          thumbnail_url: '/hero-family.webp',
         },
         {
           id: 'post_6',
@@ -143,7 +143,7 @@ function getBaselineData() {
           comments_count: 125,
           timestamp: new Date(now - 32 * 24 * 3600 * 1000).toISOString(),
           permalink: 'https://www.instagram.com/daily.jeds',
-          thumbnail_url: '/hero-family.jpeg',
+          thumbnail_url: '/hero-family.webp',
         },
       ],
     },

@@ -2,7 +2,7 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
   
   const INSTAGRAM_ACCOUNT_ID = config.instagramAccountId
-  const ACCESS_TOKEN = config.instagramToken
+  const ACCESS_TOKEN = config.metaAccessToken
   
   if (!INSTAGRAM_ACCOUNT_ID || !ACCESS_TOKEN) {
     return {
