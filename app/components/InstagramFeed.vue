@@ -8,34 +8,54 @@ const curatorError = ref(false)
 onMounted(() => {
   if (typeof window === 'undefined') return
 
-  // Check if script already exists
-  const existingScript = document.querySelector('script[src*="cdn.curator.io"]')
-  if (existingScript) {
-    curatorLoaded.value = true
-    return
-  }
+  const loadCurator = () => {
+    // Check if script already exists
+    const existingScript = document.querySelector('script[src*="cdn.curator.io"]')
+    if (existingScript) {
+      curatorLoaded.value = true
+      return
+    }
 
-  const script = document.createElement('script')
-  script.async = true
-  script.charset = 'UTF-8'
-  script.src = 'https://cdn.curator.io/published/c6fecf1c-6771-4716-922a-b523672ceaa8.js'
-  
-  script.onload = () => {
-    curatorLoaded.value = true
-  }
+    const script = document.createElement('script')
+    script.async = true
+    script.charset = 'UTF-8'
+    script.src = 'https://cdn.curator.io/published/c6fecf1c-6771-4716-922a-b523672ceaa8.js'
 
-  script.onerror = () => {
-    curatorError.value = true
-  }
-
-  // Fallback timeout if network blocks curator CDN
-  setTimeout(() => {
-    if (!curatorLoaded.value) {
+    script.onload = () => {
       curatorLoaded.value = true
     }
-  }, 3500)
 
-  document.body.appendChild(script)
+    script.onerror = () => {
+      curatorError.value = true
+    }
+
+    // Fallback timeout if network blocks curator CDN
+    setTimeout(() => {
+      if (!curatorLoaded.value) {
+        curatorLoaded.value = true
+      }
+    }, 3500)
+
+    document.body.appendChild(script)
+  }
+
+  // Tunda load Curator (3rd-party berat) sampai section mendekati viewport.
+  // Mengeluarkan JS pihak ketiga dari critical path LCP/TBT homepage.
+  const section = document.querySelector('#instagram')
+  if (section && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          loadCurator()
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '600px 0px' },
+    )
+    observer.observe(section)
+  } else {
+    loadCurator()
+  }
 })
 </script>
 

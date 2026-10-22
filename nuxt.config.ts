@@ -32,6 +32,19 @@ export default defineNuxtConfig({
 
   app: {
     head: {
+      link: [
+        // Preload font lokal agar tidak block render teks hero (font display Est 220ms)
+        {
+          rel: "preload",
+          href: "/fonts/lazy_dog.ttf",
+          as: "font",
+          type: "font/ttf",
+          crossorigin: "anonymous",
+        },
+        // Preconnect 3rd-party agar handshake tidak di critical path
+        { rel: "preconnect", href: "https://www.googletagmanager.com" },
+        { rel: "preconnect", href: "https://www.google-analytics.com" },
+      ],
       script: [
         {
           src: "https://www.googletagmanager.com/gtag/js?id=G-64NDFVZN62",
@@ -44,8 +57,15 @@ export default defineNuxtConfig({
     },
   },
 
+  site: {
+    url: "https://dailyjeds.netlify.app",
+  },
+
   sitemap: {
     autoLastmod: true,
+    // Matikan XSL stylesheet agar tidak kena warning/removal XSLT Chrome 158.
+    // Sitemap tetap valid untuk Googlebot, hanya tampil sebagai raw XML di browser.
+    xsl: false,
   },
 
   nitro: {

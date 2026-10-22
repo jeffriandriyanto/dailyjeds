@@ -16,7 +16,7 @@ withDefaults(defineProps<Props>(), {
   title: 'Daily Jeds',
   subtitle: '@daily.jeds',
   description: 'Home Growth, Cozy Living, & Parenting Lifestyle Creator berbasis di Salatiga. Membangun kedekatan otentik dengan audiens keluarga muda melalui konten Reels berestetika hangat.',
-  heroImage: '/hero-family.jpeg',
+  heroImage: '/hero-family.webp',
 })
 
 const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WA_MESSAGE)}`
@@ -39,8 +39,8 @@ const scrollToSection = (link: string) => {
 
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid lg:grid-cols-12 gap-12 items-center">
-        <!-- Left Content -->
-        <div class="lg:col-span-7 text-center lg:text-left space-y-7" data-aos="fade-right" data-aos-delay="150">
+        <!-- Left Content (no AOS: above-the-fold, jangan sembunyikan LCP) -->
+        <div class="lg:col-span-7 text-center lg:text-left space-y-7">
           <!-- Status Pill -->
           <div class="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
             <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold shadow-xs">
@@ -115,8 +115,8 @@ const scrollToSection = (link: string) => {
           </div>
         </div>
 
-        <!-- Right Visual Showcase -->
-        <div class="lg:col-span-5 relative" data-aos="fade-left" data-aos-delay="300">
+        <!-- Right Visual Showcase (no AOS: LCP image harus render segera) -->
+        <div class="lg:col-span-5 relative">
           <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/80">
             <div class="absolute inset-0 bg-gradient-to-t from-ghibli-brown-900/40 via-transparent to-transparent z-10" />
             <NuxtImg
@@ -124,7 +124,8 @@ const scrollToSection = (link: string) => {
               alt="Daily Jeds - Home Growth & Family Lifestyle Content Creator"
               class="w-full h-[440px] sm:h-[500px] object-cover"
               loading="eager"
-              placeholder
+              fetchpriority="high"
+              preload
               sizes="sm:100vw md:50vw lg:500px"
             />
 

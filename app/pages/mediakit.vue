@@ -63,7 +63,7 @@ const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMes
             <div
               class="w-20 h-20 rounded-full overflow-hidden shadow-md border-2 border-white flex-shrink-0"
             >
-              <img src="/profile.jpg" alt="Daily Jeds Profile" class="w-full h-full object-cover" />
+              <img src="/profile.webp" alt="Daily Jeds Profile" class="w-full h-full object-cover" loading="lazy" />
             </div>
             <div class="text-center sm:text-left flex-1">
               <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">

@@ -1,6 +1,9 @@
 export const useInstagramData = () => {
   const { data, status, error } = useFetch('/api/instagram/insights', {
     key: 'instagram-insights',
+    // Lazy: jangan block SSR/TTFB homepage menunggu Meta API.
+    // Komponen sudah punya fallback angka sehingga aman render duluan.
+    lazy: true,
     getCachedData: (key, nuxt) => {
       return nuxt.payload.data[key] || nuxt.static.data[key]
     },
