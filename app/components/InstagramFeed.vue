@@ -2,131 +2,116 @@
 const { trackClick } = useAnalytics()
 const { formattedFollowers } = useInstagramData()
 
-const curatorLoaded = ref(false)
-const curatorError = ref(false)
+interface FeedPost {
+  id: string
+  caption?: string
+  media_type: 'IMAGE' | 'VIDEO' | 'CAROUSEL_ALBUM'
+  like_count: number
+  comments_count: number
+  timestamp: string
+  permalink: string
+  media_url?: string
+  thumbnail_url?: string
+}
 
-onMounted(() => {
-  if (typeof window === 'undefined') return
-
-  const loadCurator = () => {
-    // Check if script already exists
-    const existingScript = document.querySelector('script[src*="cdn.curator.io"]')
-    if (existingScript) {
-      curatorLoaded.value = true
-      return
-    }
-
-    const script = document.createElement('script')
-    script.async = true
-    script.charset = 'UTF-8'
-    script.src = 'https://cdn.curator.io/published/c6fecf1c-6771-4716-922a-b523672ceaa8.js'
-
-    script.onload = () => {
-      curatorLoaded.value = true
-    }
-
-    script.onerror = () => {
-      curatorError.value = true
-    }
-
-    // Fallback timeout if network blocks curator CDN
-    setTimeout(() => {
-      if (!curatorLoaded.value) {
-        curatorLoaded.value = true
-      }
-    }, 3500)
-
-    document.body.appendChild(script)
-  }
-
-  // Tunda load Curator (3rd-party berat) sampai section mendekati viewport.
-  // Mengeluarkan JS pihak ketiga dari critical path LCP/TBT homepage.
-  const section = document.querySelector('#instagram')
-  if (section && 'IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          loadCurator()
-          observer.disconnect()
-        }
-      },
-      { rootMargin: '600px 0px' },
-    )
-    observer.observe(section)
-  } else {
-    loadCurator()
-  }
+const { data: feedData, status } = await useFetch('/api/instagram/feed', {
+  key: 'instagram-feed',
+  lazy: true,
+  getCachedData: (key, nuxt) => {
+    return nuxt.payload.data[key] || nuxt.static.data[key]
+  },
 })
+
+const posts = computed<FeedPost[]>(() => {
+  const raw = feedData.value as any
+  return raw?.posts || []
+})
+
+const formatNumber = (num: number | undefined | null): string => {
+  if (num === undefined || num === null || isNaN(num)) return '0'
+  if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M'
+  if (num >= 1000) return (num / 1000).toFixed(1) + 'K'
+  return num.toString()
+}
 </script>
 
 <template>
-  <section id="instagram" class="relative py-24 lg:py-32 overflow-hidden ghibli-section">
-    <div class="absolute inset-0 bg-gradient-to-b from-ghibli-cream-warm via-ghibli-cream to-ghibli-cream-light" />
-    
-    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-ghibli-green-200 to-transparent" />
-    <div class="absolute top-20 left-10 w-56 h-56 bg-ghibli-amber-200 rounded-full mix-blend-multiply filter blur-2xl opacity-15 animate-float" style="animation-delay: -2s;" />
-
+  <section id="instagram" class="relative py-20 lg:py-28 bg-white overflow-hidden">
     <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <!-- Section Header -->
-      <div class="text-center mb-14" data-aos="fade-up">
-        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 text-purple-900 text-xs font-semibold uppercase tracking-wider mb-3">
-          <Icon name="mdi:instagram" class="w-4 h-4 text-pink-600" />
-          <span>Live Instagram Feed &bull; {{ formattedFollowers }} Community</span>
-        </div>
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-ghibli font-bold ghibli-text-gradient mb-3">
-          Momen Terbaru di @daily.jeds
+      <div class="flex items-end justify-between gap-4 mb-8" data-aos="fade-up">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#78383B]">
+          Galeri Terbaru
         </h2>
-        <p class="text-sm sm:text-base text-ghibli-brown-500 max-w-lg mx-auto mb-4">
-          Intip konten Reels dan inspirasi hunian hangat kami yang terus diperbarui setiap minggu.
+        <a
+          href="https://www.instagram.com/daily.jeds"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex-shrink-0 text-sm font-semibold text-[#7C9070] hover:text-[#78383B] transition-colors"
+          @click="trackClick('instagram_profile_link')"
+        >
+          <span>@daily.jeds &bull; {{ formattedFollowers }} &rarr;</span>
+        </a>
+      </div>
+
+      <div v-if="status === 'pending'" class="py-16 flex flex-col items-center justify-center gap-4">
+        <div class="w-10 h-10 border-3 border-[#7C9070]/30 border-t-[#7C9070] rounded-full animate-spin" />
+        <p class="text-xs sm:text-sm text-[#6B4F4D]">Memuat postingan terbaru...</p>
+      </div>
+
+      <div
+        v-else-if="posts.length"
+        class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4"
+        data-aos="fade-up"
+      >
+        <a
+          v-for="post in posts"
+          :key="post.id"
+          :href="post.permalink"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group relative aspect-square rounded-2xl overflow-hidden bg-gray-100 shadow-xs hover:shadow-md transition-all duration-300"
+        >
+          <img
+            :src="post.thumbnail_url || post.media_url"
+            :alt="(post.caption || 'Postingan @daily.jeds').substring(0, 80)"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+          <span
+            v-if="post.media_type === 'VIDEO'"
+            class="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/50 flex items-center justify-center"
+          >
+            <Icon name="mdi:play" class="w-4 h-4 text-white" />
+          </span>
+          <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent p-3 pt-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-white text-xs sm:text-sm font-semibold flex items-center gap-3">
+              <span class="flex items-center gap-1">
+                <Icon name="mdi:heart" class="w-4 h-4" />
+                {{ formatNumber(post.like_count) }}
+              </span>
+              <span class="flex items-center gap-1">
+                <Icon name="mdi:comment" class="w-4 h-4" />
+                {{ formatNumber(post.comments_count) }}
+              </span>
+            </span>
+          </div>
+        </a>
+      </div>
+
+      <div v-else class="py-14 text-center" data-aos="fade-up">
+        <p class="text-sm text-[#6B4F4D] mb-3">
+          Feed sedang tidak tersedia — intip langsung di Instagram.
         </p>
         <a
           href="https://www.instagram.com/daily.jeds"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 text-sm font-semibold text-ghibli-green-700 hover:text-ghibli-green-800 transition-colors"
-          @click="trackClick('instagram_profile_link')"
+          class="text-sm font-semibold text-[#7C9070] hover:text-[#78383B] transition-colors"
+          @click="trackClick('instagram_feed_fallback')"
         >
-          <Icon name="mdi:instagram" class="w-4 h-4 text-pink-600" />
-          <span>Kunjungi Profil Instagram @daily.jeds &rarr;</span>
-        </a>
-      </div>
-
-      <!-- Curator Feed Wrapper -->
-      <div class="ghibli-card p-4 sm:p-6 shadow-ghibli border border-ghibli-wood-200/50" data-aos="fade-up" data-aos-delay="200">
-        <!-- Skeleton Loading State -->
-        <div v-if="!curatorLoaded" class="py-16 flex flex-col items-center justify-center gap-4">
-          <div class="w-10 h-10 border-3 border-ghibli-green-300 border-t-ghibli-green-600 rounded-full animate-spin" />
-          <p class="text-xs sm:text-sm text-ghibli-brown-400">Menyinkronkan postingan terbaru dari @daily.jeds...</p>
-        </div>
-
-        <!-- Curator Widget Container -->
-        <div
-          id="curator-feed-default-feed-layout"
-          :class="{ 'opacity-0 h-0 overflow-hidden': !curatorLoaded, 'opacity-100 transition-opacity duration-500 min-h-[300px]': curatorLoaded }"
-        >
-          <a href="https://curator.io" target="_blank" class="crt-logo crt-tag">Powered by Curator.io</a>
-        </div>
-      </div>
-
-      <!-- Bottom Follow CTA -->
-      <div class="text-center mt-12" data-aos="fade-up" data-aos-delay="300">
-        <a
-          href="https://www.instagram.com/daily.jeds"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="ghibli-button inline-flex items-center gap-2 text-sm sm:text-base font-semibold px-8 py-3.5 shadow-md"
-          @click="trackClick('instagram_follow_bottom')"
-        >
-          <Icon name="mdi:instagram" class="w-5 h-5 text-white" />
-          <span>Follow @daily.jeds di Instagram</span>
+          <span>Buka @daily.jeds &rarr;</span>
         </a>
       </div>
     </div>
   </section>
 </template>
-
-<style scoped>
-#curator-feed-default-feed-layout :deep(.crt-logo.crt-tag) {
-  display: none !important;
-}
-</style>

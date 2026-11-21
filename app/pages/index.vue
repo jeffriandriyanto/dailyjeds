@@ -12,7 +12,7 @@ useHead({
     },
     {
       property: 'og:description',
-      content: 'Rate card kolaborasi Reels mulai Rp 350.000. Jangkau ribuan ibu muda dan keluarga dengan konten terpercaya.',
+      content: 'Rate card kolaborasi 1 produksi Reels + Story Rp 400.000. Jangkau ribuan ibu muda dan keluarga dengan konten terpercaya.',
     },
     {
       property: 'og:type',
@@ -28,7 +28,7 @@ useHead({
     },
     {
       name: 'keywords',
-      content: 'daily jeds, content creator salatiga, home decor indonesia, parenting reels, kolaborasi brand, rate card influencer, micro influencer indonesia',
+      content: 'daily jeds, content creator indonesia, home decor indonesia, parenting reels, kolaborasi brand, rate card influencer, micro influencer indonesia',
     },
   ],
   link: [
@@ -63,14 +63,14 @@ const scrollToTop = () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-ghibli-cream">
+  <div class="min-h-screen bg-white">
     <AudioPlayer audio-src="/memories-jonny-easton-main-version-17339-03-22.mp3" />
 
     <main>
       <HeroSection
         title="Daily Jeds"
         subtitle="@daily.jeds"
-        description="Home Growth, Cozy Living, &amp; Parenting Lifestyle Creator berbasis di Salatiga. Membangun kedekatan otentik dengan audiens keluarga muda melalui konten Reels berestetika hangat."
+        description="Home Growth, Cozy Living, &amp; Parenting — Reels jujur dari keseharian keluarga kami."
         hero-image="/hero-family.webp"
       />
 
@@ -93,7 +93,7 @@ const scrollToTop = () => {
     <!-- Back to top button -->
     <div class="fixed bottom-24 right-5 z-40">
       <button
-        class="w-11 h-11 rounded-full bg-ghibli-green-500/90 text-white shadow-md hover:shadow-lg hover:bg-ghibli-green-600 transition-all duration-300 flex items-center justify-center group backdrop-blur-xs"
+        class="w-11 h-11 rounded-full bg-[#7C9070]/90 text-white shadow-md hover:shadow-lg hover:bg-[#5F7354] transition-all duration-300 flex items-center justify-center group backdrop-blur-xs"
         aria-label="Back to top"
         @click="scrollToTop"
       >

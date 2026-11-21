@@ -5,8 +5,6 @@ interface SocialLink {
   name: string
   url: string
   icon: string
-  color: string
-  hoverColor: string
 }
 
 const socialLinks: SocialLink[] = [
@@ -14,29 +12,21 @@ const socialLinks: SocialLink[] = [
     name: 'Instagram',
     url: 'https://www.instagram.com/daily.jeds',
     icon: 'mdi:instagram',
-    color: 'bg-gradient-to-br from-purple-500 to-pink-500',
-    hoverColor: 'hover:shadow-purple-500/30',
   },
   {
     name: 'TikTok',
     url: 'https://www.tiktok.com/@daily.jeds',
     icon: 'ri:tiktok-fill',
-    color: 'bg-gradient-to-br from-gray-900 to-gray-700',
-    hoverColor: 'hover:shadow-gray-900/30',
   },
   {
     name: 'Facebook',
     url: 'https://www.facebook.com/dailyjeds.page',
     icon: 'mdi:facebook',
-    color: 'bg-gradient-to-br from-blue-600 to-blue-500',
-    hoverColor: 'hover:shadow-blue-600/30',
   },
   {
     name: 'Shopee',
     url: 'https://shpe.site/daily.jeds',
     icon: 'simple-icons:shopee',
-    color: 'bg-gradient-to-br from-ghibli-green-500 to-ghibli-green-600',
-    hoverColor: 'hover:shadow-ghibli-green-500/30',
   },
 ]
 
@@ -49,19 +39,23 @@ const WHATSAPP_NUMBER = '6285179857522'
 const WA_MESSAGE = 'Halo Kak! Saya ingin bertanya tentang kolaborasi dengan @daily.jeds'
 
 const quickLinks: FooterLink[] = [
-  { label: 'Cerita Kami', to: '#journey' },
-  { label: 'Kolaborasi', to: '#services' },
-  { label: 'Hubungi WhatsApp', to: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WA_MESSAGE)}` },
+  { label: 'Niche Kami', to: '#pillars' },
+  { label: 'Kebiasaan Kami', to: '#story' },
+  { label: 'Paket & Rate Card', to: '#services' },
+  { label: 'Media Kit', to: '/mediakit' },
+  { label: 'Rate Card PDF', to: '/ratecard' },
 ]
 
 const currentYear = new Date().getFullYear()
 
-const scrollToSection = (link: string) => {
+const goTo = (link: string) => {
   if (link.startsWith('#')) {
     const element = document.querySelector(link)
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
     }
+  } else if (link.startsWith('/')) {
+    navigateTo(link)
   } else {
     window.open(link, '_blank')
   }
@@ -69,109 +63,93 @@ const scrollToSection = (link: string) => {
 </script>
 
 <template>
-  <footer class="relative overflow-hidden ghibli-section">
-    <div class="absolute inset-0 bg-gradient-to-b from-ghibli-cream-warm via-ghibli-brown-100 to-ghibli-brown-200" />
-    
-    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-ghibli-wood-300 to-transparent" />
+  <footer class="relative bg-[#78383B] text-[#FAF4EB] overflow-hidden pt-12 pb-8">
+    <!-- Scallop top edge -->
+    <div class="scallop-top absolute top-0 left-0 right-0 opacity-80 pointer-events-none" />
 
-    <div class="relative z-10">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
-          <div class="lg:col-span-2" data-aos="fade-up">
-            <div class="mb-6">
-              <h3 class="text-3xl font-lazy ghibli-text-gradient mb-2">
-                Daily Jeds
-              </h3>
-              <p class="text-ghibli-amber-600 font-lazy tracking-wide">
-                @daily.jeds
-              </p>
-            </div>
-            <p class="text-ghibli-brown-500 leading-relaxed max-w-md mb-8">
-              Cerita keluarga muda yang sedang membangun rumah, membangun ritme 
-              hidup, dan membangun satu sama lain. Selamat datang di rumah digital kami.
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div class="lg:col-span-2" data-aos="fade-up">
+          <div class="mb-4">
+            <h3 class="text-3xl font-serif font-black text-[#FFFDF9] mb-1">
+              DAILY JEDS
+            </h3>
+            <p class="text-sm font-medium text-[#E9BC55] tracking-wider">
+              @daily.jeds &bull; Home Growth &amp; Family Creator
             </p>
-            <div class="flex items-center gap-2 text-ghibli-brown-400">
-              <Icon name="mdi:map-marker" class="w-5 h-5 text-ghibli-green-500" />
-              <span>Salatiga, Indonesia</span>
-            </div>
+          </div>
+          <p class="text-sm sm:text-base text-[#F2E8DA]/85 leading-relaxed max-w-md mb-8">
+            Cerita keluarga muda yang sedang menata rumah, merawat ritme hidup, dan berbagi inspirasi hangat.
+          </p>
+        </div>
+
+        <div data-aos="fade-up" data-aos-delay="100">
+          <h4 class="text-base font-serif font-bold text-[#E9BC55] uppercase tracking-wider mb-5">
+            Navigasi
+          </h4>
+          <ul class="space-y-3">
+            <li
+              v-for="link in quickLinks"
+              :key="link.label"
+            >
+              <a
+                :href="link.to"
+                class="text-sm text-[#F2E8DA]/85 hover:text-white transition-colors flex items-center gap-2 group"
+                @click.prevent="trackScroll(link.label); goTo(link.to)"
+              >
+                <Icon
+                  name="mdi:arrow-right"
+                  class="w-3.5 h-3.5 text-[#E9BC55] transition-transform group-hover:translate-x-1"
+                />
+                <span>{{ link.label }}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div data-aos="fade-up" data-aos-delay="200">
+          <h4 class="text-base font-serif font-bold text-[#E9BC55] uppercase tracking-wider mb-5">
+            Ikuti Kami
+          </h4>
+          <div class="flex flex-wrap gap-2.5 mb-6">
+            <a
+              v-for="social in socialLinks"
+              :key="social.name"
+              :href="social.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 text-white hover:bg-[#E9BC55] hover:text-[#452726] transition-all"
+              :aria-label="`Follow us on ${social.name}`"
+              @click="trackSocialClick(social.name.toLowerCase())"
+            >
+              <Icon :name="social.icon" class="w-5 h-5" />
+            </a>
           </div>
 
-          <div data-aos="fade-up" data-aos-delay="100">
-            <h4 class="text-lg font-ghibli font-semibold text-ghibli-brown-700 mb-6">
-              Quick Links
-            </h4>
-            <ul class="space-y-4">
-              <li
-                v-for="link in quickLinks"
-                :key="link.label"
-              >
-                <a
-                  :href="link.to"
-                  class="text-ghibli-brown-500 hover:text-ghibli-amber-600 transition-colors flex items-center gap-2 group"
-                  @click.prevent="trackScroll(link.label); scrollToSection(link.to)"
-                >
-                  <Icon 
-                    name="mdi:chevron-right" 
-                    class="w-4 h-4 transition-transform group-hover:translate-x-1" 
-                  />
-                  <span>{{ link.label }}</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div data-aos="fade-up" data-aos-delay="200">
-            <h4 class="text-lg font-ghibli font-semibold text-ghibli-brown-700 mb-6">
-              Connect With Us
-            </h4>
-            <div class="flex flex-wrap gap-3">
-              <a
-                v-for="social in socialLinks"
-                :key="social.name"
-                :href="social.url"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="social-icon"
-                :class="[social.color, social.hoverColor]"
-                :aria-label="`Follow us on ${social.name}`"
-                @click="trackSocialClick(social.name.toLowerCase())"
-              >
-                <Icon :name="social.icon" class="w-5 h-5" />
-              </a>
-            </div>
-            <div class="mt-6">
-              <a
-                :href="`https://wa.me/${WHATSAPP_NUMBER}`"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="ghibli-button-secondary inline-flex items-center gap-2 text-sm"
-                @click="trackWaClick('footer_chat_whatsapp')"
-              >
-                <Icon name="mdi:whatsapp" class="w-4 h-4" />
-                <span>Chat WhatsApp</span>
-              </a>
-            </div>
+          <div>
+            <a
+              :href="`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WA_MESSAGE)}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-[#E9BC55] text-[#452726] hover:bg-[#DEAB3D] transition-all shadow-sm"
+              @click="trackWaClick('footer_chat_whatsapp')"
+            >
+              <Icon name="mdi:whatsapp" class="w-4 h-4 text-[#452726]" />
+              <span>Chat WhatsApp</span>
+            </a>
           </div>
         </div>
       </div>
 
-      <div class="border-t border-ghibli-wood-200/50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p class="text-ghibli-brown-400 text-sm text-center md:text-left">
-              © {{ currentYear }} Daily Jeds (@daily.jeds) · Cerita rumah, cerita hidup
-            </p>
-            <div class="flex items-center gap-2 text-ghibli-brown-400 text-sm">
-              <span>Made with</span>
-              <Icon name="mdi:heart" class="w-4 h-4 text-ghibli-amber-500 animate-pulse" />
-              <span>in Salatiga</span>
-            </div>
-          </div>
-        </div>
+      <!-- Bottom Bar -->
+      <div class="border-t border-white/15 pt-8 text-center">
+        <p class="text-xs text-[#FAF0D2]/70">
+          &sim; DAILY JEDS &bull; Objects &amp; Moments for a Kinder, Brighter Home &sim;
+        </p>
+        <p class="text-[11px] text-[#FAF0D2]/50 mt-1">
+          &copy; {{ currentYear }} @daily.jeds &bull; All rights reserved.
+        </p>
       </div>
     </div>
-
-    <div class="absolute bottom-20 right-20 w-64 h-64 bg-ghibli-green-200 rounded-full mix-blend-multiply filter blur-xl opacity-10" />
-    <div class="absolute top-20 left-20 w-48 h-48 bg-ghibli-amber-200 rounded-full mix-blend-multiply filter blur-xl opacity-10" />
   </footer>
 </template>

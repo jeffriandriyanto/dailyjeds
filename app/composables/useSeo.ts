@@ -12,12 +12,12 @@ export const useSeo = () => {
       {
         name: "description",
         content:
-          "Daily Activity, Home & Living, Review, Tips & Tricks, Healthy Lifestyle, Mom’s Life. 📍 Salatiga, Indonesia | Follow @daily.jeds di TikTok & Instagram.",
+          "Daily Activity, Home & Living, Review, Tips & Tricks, Healthy Lifestyle, Mom’s Life. Follow @daily.jeds di TikTok & Instagram.",
       },
       {
         name: "keywords",
         content:
-          "daily jeds, jeds journey, daily activity, home living, review, tips tricks, healthy lifestyle, mom life, salatiga",
+          "daily jeds, jeds journey, daily activity, home living, review, tips tricks, healthy lifestyle, mom life",
       },
       { property: "og:type", content: "website" },
       {
@@ -28,7 +28,7 @@ export const useSeo = () => {
       {
         property: "og:description",
         content:
-          "Ikuti @daily.jeds (Jeds Journey) untuk Daily Activity, Home & Living, Tips, Healthy Lifestyle & Mom’s Life. 📍 Salatiga, Indonesia",
+          "Ikuti @daily.jeds (Jeds Journey) untuk Daily Activity, Home & Living, Tips, Healthy Lifestyle & Mom’s Life.",
       },
       {
         property: "og:url",
@@ -66,7 +66,7 @@ export const useSeo = () => {
     defineWebPage({
       name: "Jeds Journey (@daily.jeds) | Daily Activity, Home & Living, Review",
       description:
-        "Daily Activity, Home & Living, Review, Tips & Tricks, Healthy Lifestyle, Mom’s Life. 📍 Salatiga, Indonesia | Follow @daily.jeds di TikTok & Instagram.",
+        "Daily Activity, Home & Living, Review, Tips & Tricks, Healthy Lifestyle, Mom’s Life. Follow @daily.jeds di TikTok & Instagram.",
     }),
     definePerson({
       name: "Jeds Journey",
@@ -79,12 +79,6 @@ export const useSeo = () => {
         "https://shpe.site/daily.jeds",
         "https://www.facebook.com/dailyjeds.page",
       ],
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Salatiga",
-        addressRegion: "Central Java",
-        addressCountry: "ID",
-      },
     }),
   ]);
 };

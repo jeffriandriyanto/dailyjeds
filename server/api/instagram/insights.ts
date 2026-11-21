@@ -1,11 +1,11 @@
-export default defineEventHandler(async (event) => {
+export default defineCachedEventHandler(async (event) => {
   const config = useRuntimeConfig()
   
   const INSTAGRAM_ACCOUNT_ID = config.instagramAccountId
   const ACCESS_TOKEN = config.metaAccessToken
   
   if (!INSTAGRAM_ACCOUNT_ID || !ACCESS_TOKEN) {
-    return getBaselineData()
+    return getBaselineData('missing_env')
   }
 
   try {
@@ -40,11 +40,19 @@ export default defineEventHandler(async (event) => {
       insights: insightsData.data?.length > 0 ? insightsData : baseline.insights,
       media: mediaData.data?.length > 0 ? mediaData : baseline.media,
       isMock: false,
+      isEstimate: false,
+      lastUpdated: new Date().toISOString(),
     }
   } catch (error: any) {
     console.error('Instagram API Error, using verified baseline:', error?.message || error)
-    return getBaselineData()
+    return getBaselineData('api_error')
   }
+}, {
+  // Cache 6 jam, stale 24 jam: hemat quota Meta API tapi tetap update berkala.
+  // Tanpa ini tiap view hit Meta + prerender Netlify bikin angka beku sampai redeploy.
+  maxAge: 6 * 60 * 60,
+  staleMaxAge: 24 * 60 * 60,
+  swr: true,
 })
 
 async function fetchAccountData(accountId: string, token: string) {
@@ -66,14 +74,16 @@ async function fetchRecentMedia(accountId: string, token: string) {
   return await $fetch(url)
 }
 
-function getBaselineData() {
+function getBaselineData(reason: 'missing_env' | 'api_error' = 'missing_env') {
   const now = Date.now()
   return {
     account: {
       name: 'Daily Jeds',
       username: 'daily.jeds',
-      followers_count: 11100,
-      media_count: 142,
+      // Estimasi manual terakhir (12.997 per 21 Nov 2025, 368 post). Update saat token valid.
+      // Jangan tampilkan sebagai data live — UI harus cek isMock/isEstimate.
+      followers_count: 12997,
+      media_count: 368,
       profile_picture_url: '/profile.webp',
     },
     insights: {
@@ -147,7 +157,10 @@ function getBaselineData() {
         },
       ],
     },
-    isMock: false,
+    isMock: true,
+    isEstimate: true,
+    estimateReason: reason,
+    lastUpdated: new Date(now).toISOString(),
   }
 }
 

@@ -7,7 +7,9 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "ig:refresh": "node scripts/refresh-ig-token.mjs",
+    "ig:status": "node -e \"fetch(process.argv[1]||'http://localhost:3000/api/instagram/status').then(r=>r.text()).then(t=>console.log(t))\""
   },
   "dependencies": {
     "@nuxt/eslint": "^1.9.0",

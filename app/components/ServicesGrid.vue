@@ -13,196 +13,182 @@ interface Service {
   features: string[]
   ctaText: string
   waMessage: string
-  gradient: string
   badge?: string
-  badgeColor?: string
+  cardBg: string
+  badgeBg: string
+  badgeText: string
+  buttonBg: string
+  buttonText: string
+  buttonHoverBg: string
 }
 
 const services: Service[] = [
   {
     id: 'paid',
-    title: 'Paid Collaboration',
-    price: 'Rp 350.000',
-    priceNote: '/ Reels',
-    description: 'Produksi konten Reels vertikal 9:16 high-definition yang terintegrasi secara natural dalam keseharian keluarga kami.',
+    title: '1 Produksi',
+    price: 'Rp 400.000',
+    priceNote: '/ Reels + Story',
+    description: 'Reels vertikal 9:16 high-definition dalam rutinitas keseharian keluarga kami.',
     icon: 'mdi:video-outline',
     features: [
-      '1x Reels Content High-Definition (Instagram @daily.jeds)',
-      'Tap Link Placement di Bio & Story 24 Jam',
-      'Free Mirroring ke TikTok @daily.jeds',
-      'Penyusunan naskah/konsep & 1x revisi minor',
-      'Laporan screenshot insight performa H+3 posting',
+      '1x Reels IG (slot tayang terjadwal)',
+      'Tap link Bio & Story interaktif',
+      'Naskah/konsep & 1x revisi minor',
+      'Laporan performa insight H+3',
     ],
-    ctaText: 'Pesan Slot Reels (Rp 350rb)',
-    waMessage: 'Halo Kak! Saya tertarik dengan Paid Collaboration Reels (Rp 350.000) di @daily.jeds. Boleh info ketersediaan slot terdekat?',
-    gradient: 'from-ghibli-green-500 to-ghibli-green-700',
+    ctaText: 'Pesan 1 Produksi (Rp 400rb)',
+    waMessage: 'Halo Kak! Saya tertarik dengan 1 Produksi Reels IG + Story (Rp 400.000) di @daily.jeds. Boleh info ketersediaan slot?',
     badge: 'Paling Diminati',
-    badgeColor: 'bg-emerald-600 text-white',
+    cardBg: 'bg-[#7C9070]', // Sage green (like Studio Picks)
+    badgeBg: 'bg-[#E9BC55]',
+    badgeText: 'text-[#452726]',
+    buttonBg: 'bg-[#FFFDF9]',
+    buttonText: 'text-[#5F7354]',
+    buttonHoverBg: 'hover:bg-white',
   },
   {
     id: 'barter',
-    title: 'TOM Barter Collaboration',
-    price: 'Barter Produk Premium',
-    priceNote: '(Seleksi Produk)',
-    description: 'Kolaborasi barter eksklusif untuk produk bernilai yang selaras dengan estetika hunian dan kebutuhan keluarga muda.',
+    title: 'Barter Selektif',
+    price: 'Min. Rp 600.000',
+    priceNote: '(nilai produk)',
+    description: 'Kolaborasi barter kurasi khusus kategori Home, Dekorasi, & Kids.',
     icon: 'mdi:gift-outline',
     features: [
-      'Hanya kategori relevan: Home Growth, Dekorasi, & Kids',
-      'Nilai retail produk minimal Rp 500.000 / campaign',
-      '1x Reels Content + Free Mirroring TikTok',
-      'Review organik yang menonjolkan fitur unggulan produk',
-      'Produk menjadi hak milik creator (keep product)',
+      'Kategori selektif: Home, Dekorasi, & Kids',
+      'Ongkir ditanggung brand, produk jadi milik creator',
+      '1x Reels + Story (tanpa mirroring)',
+      'Review organik menonjolkan fitur unggulan',
     ],
     ctaText: 'Ajukan Barter via WhatsApp',
-    waMessage: 'Halo Kak! Saya ingin mengajukan kerjasama Barter Produk untuk @daily.jeds. Produk kami berupa: [isi jenis produk & estimasi nilai retail]. Boleh diskusi?',
-    gradient: 'from-ghibli-amber-400 to-ghibli-amber-600',
-    badge: 'Selective Brands',
-    badgeColor: 'bg-amber-500 text-white',
+    waMessage: 'Halo Kak! Saya ingin mengajukan kerjasama Barter Produk (min. Rp 600.000) untuk @daily.jeds. Produk kami berupa: [isi jenis produk & estimasi nilai retail]. Boleh diskusi?',
+    badge: 'Kurasi Selektif',
+    cardBg: 'bg-[#DF8B7D]', // Coral pink (like Pieces of the Week)
+    badgeBg: 'bg-[#FFFDF9]',
+    badgeText: 'text-[#DF8B7D]',
+    buttonBg: 'bg-[#E9BC55]',
+    buttonText: 'text-[#452726]',
+    buttonHoverBg: 'hover:bg-[#DEAB3D]',
   },
 ]
-
-const hoveredCard = ref<string | null>(null)
-
-const setHovered = (id: string | null) => {
-  hoveredCard.value = id
-}
 
 const getWaLink = (message: string) => {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
 }
+
+const customWaLink = getWaLink('Halo Kak! Saya mau diskusi paket custom (mirroring TikTok/Shopee, bundle, atau lainnya) dengan @daily.jeds. Boleh minta waktu diskusi?')
 </script>
 
 <template>
-  <section id="services" class="relative py-24 lg:py-32 overflow-hidden ghibli-section">
-    <div class="absolute inset-0 bg-gradient-to-b from-ghibli-cream via-ghibli-cream-warm to-ghibli-cream-light" />
-    
-    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-ghibli-green-200 to-transparent" />
-
-    <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="services" class="relative py-20 lg:py-28 bg-white overflow-hidden">
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Section Header -->
-      <div class="text-center mb-16" data-aos="fade-up">
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold uppercase tracking-wider mb-3">
-          <Icon name="mdi:handshake-outline" class="w-3.5 h-3.5" />
-          <span>Kolaborasi &amp; Rate Card</span>
+      <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+        <div class="inline-flex items-center justify-center gap-2 mb-3 text-[#DF8B7D]">
+          <Icon name="mdi:sparkles" class="w-5 h-5 text-[#E9BC55]" />
+          <span class="text-xs sm:text-sm font-bold tracking-widest uppercase">Pilihan Kolaborasi</span>
+          <Icon name="mdi:sparkles" class="w-5 h-5 text-[#E9BC55]" />
         </div>
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-ghibli font-bold ghibli-text-gradient mb-4">
-          Pilihan Paket Kerjasama
+        
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#78383B] tracking-tight mb-3">
+          Paket &amp; Rate Card
         </h2>
-        <p class="text-base sm:text-lg text-ghibli-brown-500 max-w-2xl mx-auto leading-relaxed">
-          Harga terjangkau dengan dampak engagement nyata. Kami membatasi slot bulanan agar feed tetap organik dan audiens selalu antusias menyimak.
+        <p class="text-sm sm:text-base text-[#6B4F4D] font-medium">
+          Harga transparan tanpa biaya tersembunyi. Slot bulanan dibatasi ~
         </p>
       </div>
 
-      <!-- Services Cards -->
-      <div class="grid md:grid-cols-2 gap-8 mb-12">
+      <!-- 2 Earthy Clay Blocks (Studio Picks & Pieces of the Week inspired) -->
+      <div class="grid md:grid-cols-2 gap-8 mb-10">
         <div
           v-for="service in services"
           :key="service.id"
-          class="relative group"
+          class="relative text-white rounded-[32px] p-8 sm:p-10 transition-all duration-300 hover:-translate-y-1.5 shadow-md flex flex-col justify-between"
+          :class="service.cardBg"
           data-aos="fade-up"
-          :data-aos-delay="200 + services.indexOf(service) * 150"
-          @mouseenter="setHovered(service.id)"
-          @mouseleave="setHovered(null)"
         >
-          <div 
-            class="ghibli-card h-full p-8 transition-all duration-300 flex flex-col justify-between border"
-            :class="{ 
-              'shadow-xl -translate-y-1.5 border-ghibli-green-300': hoveredCard === service.id,
-              'shadow-ghibli border-ghibli-wood-200/50': hoveredCard !== service.id 
-            }"
-          >
-            <!-- Badge -->
-            <div v-if="service.badge" class="absolute -top-3.5 -right-2 z-10">
-              <span class="text-xs font-bold px-3 py-1.5 rounded-full shadow-md" :class="service.badgeColor">
-                {{ service.badge }}
-              </span>
-            </div>
-
-            <div>
-              <div class="flex items-start justify-between mb-5">
-                <div 
-                  class="w-14 h-14 rounded-2xl flex items-center justify-center bg-gradient-to-br shadow-md text-white transition-all duration-300"
-                  :class="[
-                    service.gradient,
-                    { 'scale-110': hoveredCard === service.id }
-                  ]"
-                >
-                  <Icon :name="service.icon" class="w-7 h-7" />
-                </div>
-              </div>
-
-              <h3 class="text-2xl font-ghibli font-bold text-ghibli-brown-700 mb-2">
-                {{ service.title }}
-              </h3>
-
-              <div class="mb-4 flex items-baseline gap-1">
-                <span class="text-3xl sm:text-4xl font-bold font-ghibli text-ghibli-green-700">{{ service.price }}</span>
-                <span v-if="service.priceNote" class="text-ghibli-brown-400 text-xs sm:text-sm font-medium">{{ service.priceNote }}</span>
-              </div>
-              
-              <p class="text-ghibli-brown-500 text-sm leading-relaxed mb-6">
-                {{ service.description }}
-              </p>
-
-              <!-- Features List -->
-              <ul class="space-y-3 mb-8">
-                <li
-                  v-for="feature in service.features"
-                  :key="feature"
-                  class="flex items-start gap-2.5 text-ghibli-brown-600"
-                >
-                  <Icon 
-                    name="mdi:check-circle" 
-                    class="w-5 h-5 text-ghibli-green-500 flex-shrink-0 mt-0.5" 
-                  />
-                  <span class="text-xs sm:text-sm leading-snug">{{ feature }}</span>
-                </li>
-              </ul>
-            </div>
-
-            <!-- CTA Button -->
-            <a
-              :href="getWaLink(service.waMessage)"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="ghibli-button w-full flex items-center justify-center gap-2 group/btn text-sm sm:text-base font-semibold shadow-md"
-              @click="trackWaClick(`service_${service.id}`)"
-            >
-              <Icon name="mdi:whatsapp" class="w-5 h-5 text-white" />
-              <span>{{ service.ctaText }}</span>
-            </a>
+          <!-- Top Badge -->
+          <div class="flex items-center justify-between gap-3 mb-6">
+            <span class="inline-flex items-center gap-1 px-4 py-1.5 rounded-full text-xs font-black shadow-xs tracking-wide"
+              :class="[service.badgeBg, service.badgeText]">
+              <Icon name="mdi:check" class="w-3.5 h-3.5" />
+              <span>{{ service.badge }}</span>
+            </span>
+            <Icon :name="service.icon" class="w-8 h-8 opacity-80" />
           </div>
+
+          <div>
+            <h3 class="text-2xl sm:text-3xl font-serif font-bold mb-2">
+              {{ service.title }}
+            </h3>
+
+            <div class="mb-4 flex items-baseline gap-2">
+              <span class="text-3xl sm:text-4xl lg:text-5xl font-bold font-serif">{{ service.price }}</span>
+              <span v-if="service.priceNote" class="text-white/80 text-xs sm:text-sm font-medium">{{ service.priceNote }}</span>
+            </div>
+
+            <p class="text-white/90 text-sm leading-relaxed mb-8">
+              {{ service.description }}
+            </p>
+
+            <!-- Features list inside cream pill containers -->
+            <ul class="space-y-3 mb-10">
+              <li
+                v-for="feature in service.features"
+                :key="feature"
+                class="flex items-start gap-3 bg-white/15 backdrop-blur-xs px-4 py-2.5 rounded-2xl border border-white/20 text-xs sm:text-sm"
+              >
+                <Icon
+                  name="mdi:check-circle"
+                  class="w-4 h-4 text-[#E9BC55] flex-shrink-0 mt-0.5"
+                />
+                <span class="leading-snug text-white font-medium">{{ feature }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Pill CTA Button -->
+          <a
+            :href="getWaLink(service.waMessage)"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full inline-flex items-center justify-center gap-2 py-4 px-6 rounded-full text-sm sm:text-base font-bold transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+            :class="[service.buttonBg, service.buttonText, service.buttonHoverBg]"
+            @click="trackWaClick(`service_${service.id}`)"
+          >
+            <Icon name="mdi:whatsapp" class="w-5 h-5" />
+            <span>{{ service.ctaText }}</span>
+          </a>
         </div>
       </div>
 
-      <!-- Custom Project & Agency Banner -->
-      <div class="ghibli-card p-6 sm:p-8 border border-ghibli-wood-200/50 shadow-sm" data-aos="fade-up" data-aos-delay="400">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-2xl bg-amber-100 flex items-center justify-center text-amber-700 flex-shrink-0">
-              <Icon name="mdi:star-box-multiple-outline" class="w-7 h-7" />
-            </div>
-            <div>
-              <h4 class="text-lg font-ghibli font-bold text-ghibli-brown-700">
-                Butuh Campaign Khusus atau Multi-Post?
-              </h4>
-              <p class="text-xs sm:text-sm text-ghibli-brown-500 mt-0.5">
-                Tersedia paket bundling (Series Reels, Story Highlight, Giveaway, hingga Brand Ambassador).
-              </p>
-            </div>
-          </div>
+      <!-- Custom Link & Ratecard Navigation -->
+      <div class="bg-[#FAFAFA] border border-gray-200/80 rounded-2xl p-6 text-center max-w-2xl mx-auto shadow-xs" data-aos="fade-up">
+        <p class="text-sm text-[#6B4F4D] font-medium mb-3">
+          Butuh kolaborasi custom (mirroring TikTok/Shopee, bundle, atau multi-reels)?
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-4">
           <a
-            :href="getWaLink('Halo Kak! Kami tertarik untuk mendiskusikan Custom Campaign / Bundling Project dengan @daily.jeds. Boleh minta waktu diskusi?')"
+            :href="customWaLink"
             target="_blank"
             rel="noopener noreferrer"
-            class="ghibli-button-secondary text-sm px-5 py-2.5 flex items-center gap-2 flex-shrink-0"
+            class="inline-flex items-center gap-1.5 text-sm font-bold text-[#78383B] hover:text-[#5C2629] transition-colors"
             @click="trackWaClick('custom_campaign_cta')"
           >
-            <Icon name="mdi:message-badge-outline" class="w-4 h-4 text-ghibli-amber-600" />
-            <span>Diskusi Custom Campaign</span>
+            <Icon name="mdi:chat-outline" class="w-4 h-4 text-[#7C9070]" />
+            <span>Diskusi via WhatsApp &rarr;</span>
           </a>
+
+          <span class="text-gray-300 hidden sm:inline">&bull;</span>
+
+          <NuxtLink
+            to="/ratecard"
+            class="inline-flex items-center gap-1 text-sm font-semibold text-[#7C9070] hover:text-[#5F7354] transition-colors"
+          >
+            <span>Buka Dokumen Rate Card Resmi &rarr;</span>
+          </NuxtLink>
         </div>
       </div>
     </div>
   </section>
 </template>
+
